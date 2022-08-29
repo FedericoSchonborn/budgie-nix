@@ -7,7 +7,6 @@
 , intltool
 , glib
 , gtk3
-, desktop-file-utils
 }:
 
 stdenv.mkDerivation rec{
@@ -29,7 +28,6 @@ stdenv.mkDerivation rec{
     pkg-config
     vala
     intltool
-    desktop-file-utils
   ];
 
   buildInputs = [
