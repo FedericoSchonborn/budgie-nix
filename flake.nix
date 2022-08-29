@@ -9,20 +9,32 @@
     };
   };
 
-  outputs = { nixpkgs, flake-utils, ... }:
-    flake-utils.lib.eachDefaultSystem (system:
-      let
-        pkgs = nixpkgs.legacyPackages.${system};
-      in
-      {
-        packages.budgie-screensaver = pkgs.callPackage ./packages/budgie-screensaver.nix { };
+  outputs = { self, nixpkgs, flake-utils, ... }:
+    flake-utils.lib.eachSystem [ "x86_64-linux" "aarch64-linux" ]
+      (system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+        in
+        {
 
-        devShells.default = pkgs.mkShell {
-          buildInputs = with pkgs; [
-            rnix-lsp
-            nixpkgs-fmt
-          ];
-        };
-      }
-    );
+          packages.budgie-desktop = pkgs.callPackage ./packages/budgie-desktop.nix
+            {
+              budgie-screensaver = self.packages.${system}.budgie-screensaver;
+            };
+          packages.budgie-screensaver = pkgs.callPackage ./packages/budgie-screensaver.nix { };
+
+          devShells.default = pkgs.mkShell {
+            buildInputs = with pkgs; [
+              rnix-lsp
+              nixpkgs-fmt
+            ];
+          };
+        }
+      )
+    // {
+      overlays.default = final: prev: {
+        budgie-desktop = self.packages.budgie-desktop;
+        budgie-screensaver = self.packages.budgie-screensaver;
+      };
+    };
 }
