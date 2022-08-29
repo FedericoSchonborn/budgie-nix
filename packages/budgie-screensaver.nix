@@ -1,4 +1,18 @@
-{ stdenv, fetchurl, meson, ninja, pkg-config, libX11, glib, dbus-glib, gtk3, gnome-desktop, systemd, libgnomekbd, linux-pam, intltool }:
+{ stdenv
+, fetchurl
+, meson
+, ninja
+, pkg-config
+, libX11
+, glib
+, dbus-glib
+, gtk3
+, gnome-desktop
+, systemd
+, libgnomekbd
+, linux-pam
+, intltool
+}:
 
 stdenv.mkDerivation rec {
   pname = "budgie-screensaver";

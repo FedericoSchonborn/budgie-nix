@@ -16,12 +16,15 @@
           pkgs = nixpkgs.legacyPackages.${system};
         in
         {
+          packages = {
+            budgie-desktop = pkgs.callPackage ./packages/budgie-desktop.nix
+              {
+                budgie-screensaver = self.packages.${system}.budgie-screensaver;
+              };
 
-          packages.budgie-desktop = pkgs.callPackage ./packages/budgie-desktop.nix
-            {
-              budgie-screensaver = self.packages.${system}.budgie-screensaver;
-            };
-          packages.budgie-screensaver = pkgs.callPackage ./packages/budgie-screensaver.nix { };
+            budgie-screensaver = pkgs.callPackage ./packages/budgie-screensaver.nix { };
+            budgie-control-center = pkgs.callPackage ./packages/budgie-control-center.nix { };
+          };
 
           devShells.default = pkgs.mkShell {
             buildInputs = with pkgs; [
@@ -32,9 +35,6 @@
         }
       )
     // {
-      overlays.default = final: prev: {
-        budgie-desktop = self.packages.budgie-desktop;
-        budgie-screensaver = self.packages.budgie-screensaver;
-      };
+      overlays.default = final: prev: self.packages;
     };
 }

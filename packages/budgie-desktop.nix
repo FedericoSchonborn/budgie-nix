@@ -1,4 +1,33 @@
-{ stdenv, fetchurl, meson, ninja, pkg-config, vala, budgie-screensaver, gtk3, libpeas, libuuid, ibus, libnotify, gnome-desktop, gnome, libwnck, accountsservice, intltool, libpulseaudio, alsa-lib, sassc, polkit, graphene, gnome-menus, upower, gtk-doc, glib, libGL, mesa, docbook-xsl-nons }:
+{ stdenv
+, fetchurl
+, meson
+, ninja
+, pkg-config
+, vala
+, budgie-screensaver
+, gtk3
+, libpeas
+, libuuid
+, ibus
+, libnotify
+, gnome-desktop
+, gnome
+, libwnck
+, accountsservice
+, intltool
+, libpulseaudio
+, alsa-lib
+, sassc
+, polkit
+, graphene
+, gnome-menus
+, upower
+, gtk-doc
+, glib
+, libGL
+, mesa
+, docbook-xsl-nons
+}:
 
 stdenv.mkDerivation rec {
   pname = "budgie-desktop";
