@@ -22,8 +22,9 @@
                 budgie-screensaver = self.packages.${system}.budgie-screensaver;
               };
 
-            budgie-screensaver = pkgs.callPackage ./packages/budgie-screensaver.nix { };
             budgie-control-center = pkgs.callPackage ./packages/budgie-control-center.nix { };
+            budgie-desktop-view = pkgs.callPackage ./packages/budgie-desktop-view { };
+            budgie-screensaver = pkgs.callPackage ./packages/budgie-screensaver.nix { };
           };
 
           devShells.default = pkgs.mkShell {
