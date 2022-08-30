@@ -1,5 +1,6 @@
 { stdenv
 , fetchurl
+, fetchpatch
 , meson
 , ninja
 , pkg-config
@@ -7,6 +8,7 @@
 , intltool
 , glib
 , gtk3
+, desktop-file-utils
 , wrapGAppsHook
 }:
 
@@ -20,7 +22,11 @@ stdenv.mkDerivation rec{
   };
 
   patches = [
-    ./0001-Disable-install-script-for-now.patch
+    (fetchpatch {
+      # Remove unused gtk-update-icon-cache
+      url = "https://github.com/BuddiesOfBudgie/${pname}/commit/b76a518b97beb65d1096344f6ba9e9a3f647d9a1.patch";
+      sha256 = "Cgk8Q8QNkauVs80kP6vZuXbtdXBXk1px+83eBlkpwl8=";
+    })
   ];
 
   nativeBuildInputs = [
@@ -29,6 +35,7 @@ stdenv.mkDerivation rec{
     pkg-config
     vala
     intltool
+    desktop-file-utils
     wrapGAppsHook
   ];
 
@@ -36,4 +43,8 @@ stdenv.mkDerivation rec{
     glib
     gtk3
   ];
+
+  preInstall = ''
+    substituteInPlace ../scripts/mesonPostInstall.sh --replace "update-desktop-database -q" "update-desktop-database $out/share/applications"
+  '';
 }
