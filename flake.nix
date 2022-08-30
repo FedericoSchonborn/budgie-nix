@@ -27,6 +27,8 @@
         }
       )
     // {
-      overlays.default = final: prev: self.packages;
+      overlays.default = final: prev: {
+        budgie = self.packages;
+      };
     };
 }
