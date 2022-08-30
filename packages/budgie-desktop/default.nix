@@ -38,6 +38,10 @@ stdenv.mkDerivation rec {
     sha256 = "38cfd479d1bbdff30f8c18158a8ba6336cc67234d7504c3fbefc05027eed2d4e";
   };
 
+  patches = [
+    ./0001-Add-missing-gio-unix-2.0-dependencies.patch
+  ];
+
   nativeBuildInputs = [
     meson
     ninja
@@ -72,7 +76,4 @@ stdenv.mkDerivation rec {
     libGL
     mesa
   ];
-
-  # For <gio/gdesktopappinfo.h>
-  NIX_CFLAGS_COMPILE = "-I${glib.dev}/include/gio-unix-2.0";
 }

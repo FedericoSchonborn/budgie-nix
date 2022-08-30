@@ -16,16 +16,7 @@
           pkgs = nixpkgs.legacyPackages.${system};
         in
         {
-          packages = {
-            budgie-desktop = pkgs.callPackage ./packages/budgie-desktop.nix
-              {
-                budgie-screensaver = self.packages.${system}.budgie-screensaver;
-              };
-
-            budgie-control-center = pkgs.callPackage ./packages/budgie-control-center.nix { };
-            budgie-desktop-view = pkgs.callPackage ./packages/budgie-desktop-view { };
-            budgie-screensaver = pkgs.callPackage ./packages/budgie-screensaver.nix { };
-          };
+          packages = import ./packages { inherit pkgs; };
 
           devShells.default = pkgs.mkShell {
             buildInputs = with pkgs; [

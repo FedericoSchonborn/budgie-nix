@@ -1,0 +1,227 @@
+From 52df52db76d3542f2b1f6eb530f79f0abab5d75c Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Federico=20Dami=C3=A1n=20Schonborn?= <fdschonborn@gmail.com>
+Date: Mon, 29 Aug 2022 22:11:03 -0300
+Subject: [PATCH] Add missing gio-unix-2.0 dependencies
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Signed-off-by: Federico Damián Schonborn <fdschonborn@gmail.com>
+---
+ src/abomination/meson.build           | 1 +
+ src/applets/budgie-menu/meson.build   | 1 +
+ src/applets/clock/meson.build         | 1 +
+ src/applets/icon-tasklist/meson.build | 1 +
+ src/applets/night-light/meson.build   | 1 +
+ src/applets/status/meson.build        | 1 +
+ src/applets/workspaces/meson.build    | 1 +
+ src/appsys/meson.build                | 1 +
+ src/daemon/meson.build                | 1 +
+ src/lib/meson.build                   | 1 +
+ src/libsession/meson.build            | 5 ++++-
+ src/panel/meson.build                 | 1 +
+ src/polkit/meson.build                | 1 +
+ src/raven/meson.build                 | 1 +
+ src/rundialog/meson.build             | 1 +
+ src/wm/meson.build                    | 1 +
+ 16 files changed, 19 insertions(+), 1 deletion(-)
+
+diff --git a/src/abomination/meson.build b/src/abomination/meson.build
+index 592eb42..8754db0 100644
+--- a/src/abomination/meson.build
++++ b/src/abomination/meson.build
+@@ -8,6 +8,7 @@ libabomination_sources = [
+ ]
+ 
+ libabomination_deps = [
++    dep_giounix,
+     dep_gtk3,
+     dep_gdkx11,
+     dep_wnck,
+diff --git a/src/applets/budgie-menu/meson.build b/src/applets/budgie-menu/meson.build
+index 455b693..5ba980a 100644
+--- a/src/applets/budgie-menu/meson.build
++++ b/src/applets/budgie-menu/meson.build
+@@ -36,6 +36,7 @@ applet_budgiemenu_sources = [
+ 
+ applet_budgiemenu_deps = [
+     libplugin_vapi,
++    dep_giounix,
+     dep_gtk3,
+     dep_peas,
+     link_libplugin,
+diff --git a/src/applets/clock/meson.build b/src/applets/clock/meson.build
+index 93161ba..957fe6f 100644
+--- a/src/applets/clock/meson.build
++++ b/src/applets/clock/meson.build
+@@ -39,6 +39,7 @@ shared_library(
+     applet_clock_sources,
+     dependencies: [
+         libplugin_vapi,
++        dep_giounix,
+         dep_gtk3,
+         dep_peas,
+         link_libplugin,
+diff --git a/src/applets/icon-tasklist/meson.build b/src/applets/icon-tasklist/meson.build
+index a2ae6c0..616e5aa 100644
+--- a/src/applets/icon-tasklist/meson.build
++++ b/src/applets/icon-tasklist/meson.build
+@@ -39,6 +39,7 @@ applet_icontasklist_sources = [
+ 
+ applet_icontasklist_deps = [
+     libplugin_vapi,
++    dep_giounix,
+     dep_gtk3,
+     dep_peas,
+     dep_wnck,
+diff --git a/src/applets/night-light/meson.build b/src/applets/night-light/meson.build
+index 78596f6..9882627 100644
+--- a/src/applets/night-light/meson.build
++++ b/src/applets/night-light/meson.build
+@@ -34,6 +34,7 @@ applet_nightlight_sources = [
+ 
+ applet_nightlight_deps = [
+     libplugin_vapi,
++    dep_giounix,
+     dep_gtk3,
+     dep_peas,
+     link_libplugin,
+diff --git a/src/applets/status/meson.build b/src/applets/status/meson.build
+index 54926ba..626bb91 100644
+--- a/src/applets/status/meson.build
++++ b/src/applets/status/meson.build
+@@ -28,6 +28,7 @@ applet_status_sources = [
+ 
+ applet_status_deps = [
+     libplugin_vapi,
++    dep_giounix,
+     dep_gtk3,
+     dep_peas,
+     dep_accountsservice,
+diff --git a/src/applets/workspaces/meson.build b/src/applets/workspaces/meson.build
+index d931d3d..b837312 100644
+--- a/src/applets/workspaces/meson.build
++++ b/src/applets/workspaces/meson.build
+@@ -28,6 +28,7 @@ applet_workspaces_sources = [
+ 
+ applet_workspaces_deps = [
+     libplugin_vapi,
++    dep_giounix,
+     dep_gtk3,
+     dep_wnck,
+     dep_peas,
+diff --git a/src/appsys/meson.build b/src/appsys/meson.build
+index 14a92a5..012b7f7 100644
+--- a/src/appsys/meson.build
++++ b/src/appsys/meson.build
+@@ -8,6 +8,7 @@ libappsys = static_library(
+     'appsys',
+     libappsys_sources,
+     dependencies: [
++        dep_giounix,
+         dep_gtk3,
+         dep_gdkx11,
+         dep_wnck,
+diff --git a/src/daemon/meson.build b/src/daemon/meson.build
+index e2e9141..75f0e00 100644
+--- a/src/daemon/meson.build
++++ b/src/daemon/meson.build
+@@ -36,6 +36,7 @@ daemon_sources = [
+ ]
+ 
+ daemon_deps = [
++    dep_giounix,
+     dep_gtk3,
+     dep_gdkx11,
+     dep_notify,
+diff --git a/src/lib/meson.build b/src/lib/meson.build
+index 497ee00..be0512a 100644
+--- a/src/lib/meson.build
++++ b/src/lib/meson.build
+@@ -14,6 +14,7 @@ libbudgieprivate = shared_library(
+     dependencies: [
+         libplugin_vapi,
+         dep_peas,
++        dep_giounix,
+         dep_gtk3,
+         meson.get_compiler('c').find_library('m', required: false),
+         link_libplugin,
+diff --git a/src/libsession/meson.build b/src/libsession/meson.build
+index 9121d6b..ddbc7ea 100644
+--- a/src/libsession/meson.build
++++ b/src/libsession/meson.build
+@@ -7,7 +7,10 @@ libsession_sources = [
+ libsession = static_library(
+     'session',
+     libsession_sources,
+-    dependencies: dep_glib,
++    dependencies: [
++        dep_glib,
++        dep_giounix
++    ],
+     vala_args: [
+         '--pkg', 'gio-unix-2.0',
+     ],
+diff --git a/src/panel/meson.build b/src/panel/meson.build
+index ee61086..88f1c65 100644
+--- a/src/panel/meson.build
++++ b/src/panel/meson.build
+@@ -41,6 +41,7 @@ panel_sources = [
+ 
+ panel_deps = [
+     libplugin_vapi,
++    dep_giounix,
+     dep_gtk3,
+     dep_peas,
+     dep_libuuid,
+diff --git a/src/polkit/meson.build b/src/polkit/meson.build
+index 7a4e997..a615a0d 100644
+--- a/src/polkit/meson.build
++++ b/src/polkit/meson.build
+@@ -24,6 +24,7 @@ polkit_sources = [
+ pkversion = '>= 0.105'
+ 
+ polkit_deps = [
++    dep_giounix,
+     dep_gtk3,
+     link_libconfig,
+     link_libtheme,
+diff --git a/src/raven/meson.build b/src/raven/meson.build
+index 449a620..b8ab6dd 100644
+--- a/src/raven/meson.build
++++ b/src/raven/meson.build
+@@ -41,6 +41,7 @@ libraven_deps = [
+     # https://github.com/mesonbuild/meson/issues/2096
+     link_libbudgieprivate,
+     libplugin_vapi,
++    dep_giounix,
+     dep_gtk3,
+     dep_peas,
+     link_libconfig,
+diff --git a/src/rundialog/meson.build b/src/rundialog/meson.build
+index ab0b20b..75afe61 100644
+--- a/src/rundialog/meson.build
++++ b/src/rundialog/meson.build
+@@ -4,6 +4,7 @@ rundialog_sources = [
+ ]
+ 
+ rundialog_deps = [
++    dep_giounix,
+     dep_gtk3,
+     link_libconfig,
+     link_libtheme,
+diff --git a/src/wm/meson.build b/src/wm/meson.build
+index de16f29..3515d95 100644
+--- a/src/wm/meson.build
++++ b/src/wm/meson.build
+@@ -33,6 +33,7 @@ endif
+ 
+ budgie_wm_deps = [
+     link_libconfig,
++    dep_giounix,
+     dep_mutter,
+     dep_gnomedesktop,
+     dep_gsettings,
+-- 
+2.37.2
+
