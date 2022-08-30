@@ -10,13 +10,31 @@
   };
 
   outputs = { self, nixpkgs, flake-utils, ... }:
-    flake-utils.lib.eachSystem [ "x86_64-linux" "aarch64-linux" ]
+    {
+      nixosConfigurations.vm = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          self.nixosModules.budgie
+          ./vm.nix
+        ];
+      };
+
+      nixosModules = {
+        budgie = import ./nixos.nix { inherit self; };
+        default = self.nixosModules.budgie;
+      };
+
+      overlays = {
+        budgie = import ./overlay.nix;
+        default = self.overlays.budgie;
+      };
+    } // flake-utils.lib.eachSystem [ "x86_64-linux" "aarch64-linux" ]
       (system:
         let
           pkgs = nixpkgs.legacyPackages.${system};
         in
         {
-          packages = import ./packages { inherit pkgs; };
+          packages = import ./packages.nix { inherit pkgs; };
 
           devShells.default = pkgs.mkShell {
             buildInputs = with pkgs; [
@@ -25,10 +43,5 @@
             ];
           };
         }
-      )
-    // {
-      overlays.default = final: prev: {
-        budgie = self.packages;
-      };
-    };
+      );
 }

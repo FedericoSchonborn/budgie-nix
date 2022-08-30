@@ -78,4 +78,8 @@ stdenv.mkDerivation rec {
     libGL
     mesa
   ];
+
+  passthru.providedSessions = [
+    "budgie-desktop"
+  ];
 }
