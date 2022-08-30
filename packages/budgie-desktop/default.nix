@@ -27,6 +27,7 @@
 , libGL
 , mesa
 , docbook-xsl-nons
+, wrapGAppsHook
 }:
 
 stdenv.mkDerivation rec {
@@ -50,6 +51,7 @@ stdenv.mkDerivation rec {
     intltool
     gtk-doc
     docbook-xsl-nons
+    wrapGAppsHook
   ];
 
   buildInputs = [

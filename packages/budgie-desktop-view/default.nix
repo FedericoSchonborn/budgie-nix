@@ -7,6 +7,7 @@
 , intltool
 , glib
 , gtk3
+, wrapGAppsHook
 }:
 
 stdenv.mkDerivation rec{
@@ -28,6 +29,7 @@ stdenv.mkDerivation rec{
     pkg-config
     vala
     intltool
+    wrapGAppsHook
   ];
 
   buildInputs = [

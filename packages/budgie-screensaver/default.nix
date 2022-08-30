@@ -12,6 +12,7 @@
 , libgnomekbd
 , linux-pam
 , intltool
+, wrapGAppsHook
 }:
 
 stdenv.mkDerivation rec {
@@ -29,6 +30,7 @@ stdenv.mkDerivation rec {
     pkg-config
     intltool
     systemd
+    wrapGAppsHook
   ];
 
   buildInputs = [

@@ -34,6 +34,7 @@
 , libsecret
 , gsound
 , krb5
+, wrapGAppsHook
 }:
 
 stdenv.mkDerivation rec {
@@ -52,6 +53,7 @@ stdenv.mkDerivation rec {
     glib
     gettext
     polkit # For Polkit ITS
+    wrapGAppsHook
   ];
 
   buildInputs = [
