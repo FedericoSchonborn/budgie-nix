@@ -1,4 +1,5 @@
-{ stdenv
+{ lib
+, stdenv
 , fetchFromGitHub
 , meson
 , ninja
@@ -33,4 +34,13 @@ stdenv.mkDerivation {
     chmod +x ./scripts/optimizeImage.sh
     patchShebangs --host ./scripts/optimizeImage.sh
   '';
+
+  meta = with lib; {
+    description = "The default background set for the Budgie Desktop";
+    longDescription = ''
+      Budgie Backgrounds is the default set of background images for the Budgie Desktop.
+    '';
+    homepage = "https://blog.buddiesofbudgie.org/";
+    license = licenses.cc0;
+  };
 }
