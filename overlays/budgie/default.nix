@@ -1,13 +1,17 @@
-_: super:
+final: prev:
+
+let
+  packages = import ../packages;
+in
 
 rec {
   # Budgie Desktop
-  budgie.budgie-backgrounds = super.callPackage ../../packages/budgie-backgrounds { };
-  budgie.budgie-control-center = super.callPackage ../../packages/budgie-control-center { };
-  budgie.budgie-desktop = super.callPackage ../../packages/budgie-desktop { inherit (budgie) budgie-screensaver; };
-  budgie.budgie-desktop-view = super.callPackage ../../packages/budgie-desktop-view { };
-  budgie.budgie-screensaver = super.callPackage ../../packages/budgie-screensaver { };
+  budgie.budgie-backgrounds = packages.budgie-backgrounds.${prev.system};
+  budgie.budgie-control-center = packages.budgie-control-center.${prev.system};
+  budgie.budgie-desktop = packages.budgie-desktop.${prev.system};
+  budgie.budgie-desktop-view = packages.budgie-desktop-view.${prev.system};
+  budgie.budgie-screensaver = packages.budgie-screensaver.${prev.system};
 
   # Applets
-  budgieApplets.budgie-trash-applet = super.callPackage ./budgie-trash-applet { inherit (budgie) budgie-desktop; };
+  budgieApplets.budgie-trash-applet = packages.budgie-trash-applet.${prev.system};
 }
