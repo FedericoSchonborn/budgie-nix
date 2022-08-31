@@ -12,15 +12,15 @@ in
 
   config = mkMerge [
     (mkIf cfg.enable {
-      services.xserver.displayManager.sessionPackages = with pkgs; [ budgie-desktop ];
+      services.xserver.displayManager.sessionPackages = with pkgs; [ budgie.budgie-desktop ];
 
       environment.systemPackages = with pkgs; [
         # Budgie Desktop.
-        budgie-backgrounds
-        budgie-desktop
-        budgie-desktop-view
-        budgie-control-center
-        budgie-screensaver
+        budgie.budgie-backgrounds
+        budgie.budgie-desktop
+        budgie.budgie-desktop-view
+        budgie.budgie-control-center
+        budgie.budgie-screensaver
 
         # Create user directories.
         xdg-user-dirs
@@ -48,7 +48,7 @@ in
       networking.networkmanager.enable = mkDefault true;
       services.colord.enable = mkDefault true;
       services.dbus.enable = true;
-      services.dbus.packages = with pkgs; [ budgie-control-center ];
+      services.dbus.packages = with pkgs; [ budgie.budgie-control-center ];
 
       # Required by Budgie Desktop.
       security.polkit.enable = true;
