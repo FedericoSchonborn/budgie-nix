@@ -1,10 +1,4 @@
-{ self }:
-
-{ lib
-, config
-, pkgs
-, ...
-}:
+{ lib, config, pkgs, ... }:
 
 with lib;
 
@@ -18,16 +12,18 @@ in
 
   config = mkMerge [
     (mkIf cfg.enable {
-      nixpkgs.overlays = [
-        self.overlays.budgie
-      ];
-      services.xserver.displayManager.sessionPackages = [ self.packages.x86_64-linux.budgie-desktop ];
+      services.xserver.displayManager.sessionPackages = with pkgs; [ budgie-desktop ];
       environment.systemPackages = with pkgs;[
         budgie-desktop
         budgie-desktop-view
         budgie-control-center
         budgie-screensaver
+
+        # Required by the Budgie Desktop session
         gnome.gnome-session
+
+        # Required by Budgie Menu
+        gnome-menus
       ];
     })
   ];

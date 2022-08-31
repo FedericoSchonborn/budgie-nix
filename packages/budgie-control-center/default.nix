@@ -37,9 +37,13 @@
 , wrapGAppsHook
 }:
 
-stdenv.mkDerivation rec {
+let
   pname = "budgie-control-center";
   version = "1.1.0";
+in
+
+stdenv.mkDerivation {
+  inherit pname version;
 
   src = fetchurl {
     url = "https://github.com/BuddiesOfBudgie/${pname}/releases/download/v${version}/${pname}-${version}.tar.xz";

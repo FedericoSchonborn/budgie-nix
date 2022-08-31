@@ -15,17 +15,23 @@
         system = "x86_64-linux";
         modules = [
           self.nixosModules.budgie
-          ./vm.nix
+          ./systems/vm
         ];
       };
 
       nixosModules = {
-        budgie = import ./nixos.nix { inherit self; };
+        budgie = {
+          nixpkgs.overlays = [ self.overlays.budgie ];
+          imports = [
+            ./modules/budgie
+          ];
+        };
+
         default = self.nixosModules.budgie;
       };
 
       overlays = {
-        budgie = import ./overlay.nix;
+        budgie = import ./overlays/budgie;
         default = self.overlays.budgie;
       };
     } // flake-utils.lib.eachSystem [ "x86_64-linux" "aarch64-linux" ]
@@ -34,7 +40,7 @@
           pkgs = nixpkgs.legacyPackages.${system};
         in
         {
-          packages = import ./packages.nix { inherit pkgs; };
+          packages = import ./packages { inherit pkgs; };
 
           devShells.default = pkgs.mkShell {
             buildInputs = with pkgs; [

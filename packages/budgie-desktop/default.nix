@@ -30,9 +30,13 @@
 , wrapGAppsHook
 }:
 
-stdenv.mkDerivation rec {
+let
   pname = "budgie-desktop";
   version = "10.6.4";
+in
+
+stdenv.mkDerivation {
+  inherit pname version;
 
   src = fetchurl {
     url = "https://github.com/BuddiesOfBudgie/${pname}/releases/download/v${version}/${pname}-v${version}.tar.xz";
