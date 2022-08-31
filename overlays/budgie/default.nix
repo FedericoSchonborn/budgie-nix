@@ -9,5 +9,5 @@ rec {
   budgie.budgie-screensaver = super.callPackage ../../packages/budgie-screensaver { };
 
   # Applets
-  budgieApplets.budgie-trash-applet = pkgs.callPackage ./budgie-trash-applet { inherit (budgie) budgie-desktop; };
+  budgieApplets.budgie-trash-applet = super.callPackage ./budgie-trash-applet { inherit (budgie) budgie-desktop; };
 }
