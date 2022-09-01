@@ -1,10 +1,6 @@
-final: prev:
-
-let
+final: prev: let
   packages = import ../packages;
-in
-
-rec {
+in rec {
   # Budgie Desktop
   budgie.budgie-backgrounds = packages.budgie-backgrounds.${prev.system};
   budgie.budgie-control-center = packages.budgie-control-center.${prev.system};

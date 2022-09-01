@@ -9,7 +9,12 @@
     };
   };
 
-  outputs = { self, nixpkgs, flake-utils, ... }:
+  outputs = {
+    self,
+    nixpkgs,
+    flake-utils,
+    ...
+  }:
     {
       nixosConfigurations.vm = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
@@ -21,7 +26,7 @@
 
       nixosModules = {
         budgie = {
-          nixpkgs.overlays = [ self.overlays.budgie ];
+          nixpkgs.overlays = [self.overlays.budgie];
           imports = [
             ./modules/budgie
           ];
@@ -34,20 +39,22 @@
         budgie = import ./overlays/budgie;
         default = self.overlays.budgie;
       };
-    } // flake-utils.lib.eachSystem [ "x86_64-linux" "aarch64-linux" ]
-      (system:
-        let
-          pkgs = nixpkgs.legacyPackages.${system};
-        in
-        {
-          packages = import ./packages { inherit pkgs; };
+    }
+    // flake-utils.lib.eachSystem ["x86_64-linux" "aarch64-linux"]
+    (
+      system: let
+        pkgs = nixpkgs.legacyPackages.${system};
+      in {
+        packages = import ./packages {inherit pkgs;};
 
-          devShells.default = pkgs.mkShell {
-            buildInputs = with pkgs; [
-              rnix-lsp
-              nixpkgs-fmt
-            ];
-          };
-        }
-      );
+        devShells.default = pkgs.mkShell {
+          buildInputs = with pkgs; [
+            rnix-lsp
+            nixpkgs-fmt
+          ];
+        };
+
+        formatter = pkgs.alejandra;
+      }
+    );
 }

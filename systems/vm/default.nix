@@ -1,6 +1,8 @@
-{ config, pkgs, ... }:
-
 {
+  config,
+  pkgs,
+  ...
+}: {
   documentation.nixos.enable = false;
   users.users.vm.initialPassword = "vm";
   users.users.vm.isNormalUser = true;
