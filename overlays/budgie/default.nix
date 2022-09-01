@@ -1,13 +1,13 @@
 final: prev: let
-  packages = import ../packages;
+  packages = import ../../packages {inherit (prev) pkgs;};
 in rec {
   # Budgie Desktop
-  budgie.budgie-backgrounds = packages.budgie-backgrounds.${prev.system};
-  budgie.budgie-control-center = packages.budgie-control-center.${prev.system};
-  budgie.budgie-desktop = packages.budgie-desktop.${prev.system};
-  budgie.budgie-desktop-view = packages.budgie-desktop-view.${prev.system};
-  budgie.budgie-screensaver = packages.budgie-screensaver.${prev.system};
+  budgie.budgie-backgrounds = packages.budgie-backgrounds;
+  budgie.budgie-control-center = packages.budgie-control-center;
+  budgie.budgie-desktop = packages.budgie-desktop;
+  budgie.budgie-desktop-view = packages.budgie-desktop-view;
+  budgie.budgie-screensaver = packages.budgie-screensaver;
 
   # Applets
-  budgieApplets.budgie-trash-applet = packages.budgie-trash-applet.${prev.system};
+  budgieApplets.budgie-trash-applet = packages.budgie-trash-applet;
 }
