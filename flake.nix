@@ -53,12 +53,19 @@
       in {
         packages = import ./packages {inherit pkgs;};
 
-        devShells.default = pkgs.mkShell {
-          buildInputs = with pkgs; [
-            rnix-lsp
-            nixpkgs-fmt
-          ];
-        };
+        devShells.default = let
+          buildAll = pkgs.writeShellScriptBin "buildAll" ''
+            nix flake show --json | jq  '.packages."${system}"|keys[]' | xargs -I {} nix build .#{} -o result-{}
+          '';
+        in
+          pkgs.mkShell {
+            buildInputs = with pkgs; [
+              rnix-lsp
+              nixpkgs-fmt
+              jq
+              buildAll
+            ];
+          };
 
         formatter = pkgs.alejandra;
       }
