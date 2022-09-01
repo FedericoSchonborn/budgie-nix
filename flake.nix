@@ -40,7 +40,13 @@
         default = self.overlays.budgie;
       };
     }
-    // flake-utils.lib.eachSystem ["x86_64-linux" "aarch64-linux"]
+    // flake-utils.lib.eachSystem [
+      "aarch64-linux"
+      "i686-linux"
+      "powerpc64le-linux"
+      "riscv64-linux"
+      "x86_64-linux"
+    ]
     (
       system: let
         pkgs = nixpkgs.legacyPackages.${system};
