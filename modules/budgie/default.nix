@@ -9,6 +9,14 @@ with lib; let
 in {
   options.services.xserver.desktopManager.budgie = {
     enable = mkEnableOption "Budgie Desktop";
+
+    appletPackages = mkOption {
+      # TODO: Better description.
+      description = "Budgie Desktop Applets";
+      type = with types; listOf package;
+      default = [];
+      example = literalExpression [pkgs.budgieApplets.budgie-trash-applet];
+    };
   };
 
   config = mkMerge [
@@ -33,6 +41,7 @@ in {
           # Required by Budgie Menu.
           gnome-menus
         ]
+        ++ cfg.appletPackages
         ++ (
           # Network Manager applet.
           optional config.networking.networkmanager.enable networkmanagerapplet
