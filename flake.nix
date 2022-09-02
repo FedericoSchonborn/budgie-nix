@@ -57,6 +57,8 @@
           buildAll = pkgs.writeShellScriptBin "buildAll" ''
             nix flake show --json | jq  '.packages."${system}"|keys[]' | xargs -I {} nix build .#{} -o result-{}
           '';
+          buildVm = pkgs.writeShellScriptBin "buildVm" "nixos-rebuild build-vm -v --flake .#vm";
+          runVm = pkgs.writeShellScriptBin "runVm" "buildVm && ./result/bin/run-nixos-vm";
         in
           pkgs.mkShell {
             buildInputs = with pkgs; [
@@ -64,6 +66,8 @@
               nixpkgs-fmt
               jq
               buildAll
+              buildVm
+              runVm
             ];
           };
 
