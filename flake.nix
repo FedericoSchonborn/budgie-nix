@@ -16,14 +16,6 @@
     ...
   }:
     {
-      nixosConfigurations.vm = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [
-          self.nixosModules.budgie
-          ./vm.nix
-        ];
-      };
-
       nixosModules = {
         budgie = {
           nixpkgs.overlays = [self.overlays.budgie];
@@ -53,11 +45,19 @@
       in {
         packages = import ./packages.nix {inherit pkgs;};
 
+        nixosConfigurations = nixpkgs.lib.nixosSystem {
+          inherit system;
+          modules = [
+            self.nixosModules.budgie
+            ./vm.nix
+          ];
+        };
+
         devShells.default = let
           buildAll = pkgs.writeShellScriptBin "buildAll" ''
             nix flake show --json | jq  '.packages."${system}"|keys[]' | xargs -I {} nix build .#{} -o result-{}
           '';
-          buildVm = pkgs.writeShellScriptBin "buildVm" "nixos-rebuild build-vm --flake .#vm";
+          buildVm = pkgs.writeShellScriptBin "buildVm" "nixos-rebuild build-vm --flake .#${system}";
           runVm = pkgs.writeShellScriptBin "runVm" "buildVm && ./result/bin/run-nixos-vm";
         in
           pkgs.mkShell {
