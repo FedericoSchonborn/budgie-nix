@@ -15,7 +15,7 @@ in {
       description = "Budgie Desktop Applets";
       type = with types; listOf package;
       default = [];
-      example = literalExpression [pkgs.budgieApplets.budgie-trash-applet];
+      example = literalExpression "[ pkgs.budgieApplets.budgie-trash-applet ]";
     };
   };
 

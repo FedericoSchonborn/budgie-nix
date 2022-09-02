@@ -3,6 +3,12 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
 
+    pre-commit-hooks = {
+      url = "github:cachix/pre-commit-hooks.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
+    };
+
     flake-compat = {
       url = "github:edolstra/flake-compat";
       flake = false;
@@ -13,6 +19,7 @@
     self,
     nixpkgs,
     flake-utils,
+    pre-commit-hooks,
     ...
   }:
     {
@@ -32,13 +39,11 @@
         default = self.overlays.budgie;
       };
     }
-    // flake-utils.lib.eachSystem [
-      "aarch64-linux"
-      "i686-linux"
-      "powerpc64le-linux"
-      "riscv64-linux"
-      "x86_64-linux"
-    ]
+    // flake-utils.lib.eachSystem
+    (with flake-utils.lib.system; [
+      aarch64-linux
+      x86_64-linux
+    ])
     (
       system: let
         pkgs = import nixpkgs {inherit system;};
@@ -49,7 +54,7 @@
           inherit system;
           modules = [
             self.nixosModules.budgie
-            ./vm.nix
+            ./virtual-machine.nix
           ];
         };
 
@@ -61,6 +66,7 @@
           runVm = pkgs.writeShellScriptBin "runVm" "buildVm && ./result/bin/run-nixos-vm";
         in
           pkgs.mkShell {
+            inherit (self.checks.${system}.pre-commit-hook) shellHook;
             buildInputs = with pkgs; [
               rnix-lsp
               nixpkgs-fmt
@@ -70,6 +76,15 @@
               runVm
             ];
           };
+
+        checks = {
+          pre-commit-hook = pre-commit-hooks.lib.${system}.run {
+            src = ./.;
+            hooks = {
+              alejandra.enable = true;
+            };
+          };
+        };
 
         formatter = pkgs.alejandra;
       }

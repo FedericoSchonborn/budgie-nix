@@ -3,6 +3,9 @@
   pkgs,
   ...
 }: {
+  fileSystems."/".label = "fuck-off-flake-check";
+  boot.loader.grub.devices = ["/"];
+
   documentation.nixos.enable = false;
   users.users.vm.initialPassword = "vm";
   users.users.vm.isNormalUser = true;
