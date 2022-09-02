@@ -1,5 +1,5 @@
 final: prev: let
-  packages = import ../../packages {inherit (prev) pkgs;};
+  packages = import ./packages.nix {inherit (prev) pkgs;};
 in rec {
   # Budgie Desktop
   budgie.budgie-backgrounds = packages.budgie-backgrounds;
