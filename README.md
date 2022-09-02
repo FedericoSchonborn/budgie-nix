@@ -15,5 +15,5 @@ $ buildAll
 ```shell
 $ nix develop
 # Inside the `nix develop` shell:
-$ runVm
+$ runVm # or runFreshVm if you want a clean machine.
 ```
