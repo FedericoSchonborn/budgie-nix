@@ -2,16 +2,18 @@
 
 Nix Flake for Budgie Desktop.
 
-## Run On A Virtual Machine
+## Build All Packages
 
 ```shell
-# Inside a nix-shell/nix develop shell:
-$ runVm
+$ nix develop
+# Inside the `nix develop` shell:
+$ buildAll
 ```
 
-## Building All Packages
+## Run A Virtual Machine
 
 ```shell
-# Inside a nix-shell/nix develop shell:
-$ buildAll
+$ nix develop
+# Inside the `nix develop` shell:
+$ runVm
 ```

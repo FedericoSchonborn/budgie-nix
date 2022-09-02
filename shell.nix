@@ -1,14 +1,21 @@
-(
-  import
-  (
-    let
-      lock = builtins.fromJSON (builtins.readFile ./flake.lock);
-    in
-      fetchTarball {
-        url = "https://github.com/edolstra/flake-compat/archive/${lock.nodes.flake-compat.locked.rev}.tar.gz";
-        sha256 = lock.nodes.flake-compat.locked.narHash;
-      }
-  )
-  {src = ./.;}
-)
-.shellNix
+{
+  system,
+  pkgs,
+  checks,
+  ...
+}: let
+  buildAll = pkgs.writeShellScriptBin "buildAll" "nix flake show --json | jq  '.packages.\"${system}\"|keys[]' | xargs -I {} nix build .#{} -o result-{}";
+  buildVm = pkgs.writeShellScriptBin "buildVm" "nixos-rebuild build-vm --flake .#${system}";
+  runVm = pkgs.writeShellScriptBin "runVm" "buildVm && ./result/bin/run-nixos-vm";
+in
+  pkgs.mkShell {
+    inherit (checks.${system}.pre-commit-hook) shellHook;
+    buildInputs = with pkgs; [
+      rnix-lsp
+      nixpkgs-fmt
+      jq
+      buildAll
+      buildVm
+      runVm
+    ];
+  }

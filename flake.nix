@@ -8,11 +8,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "flake-utils";
     };
-
-    flake-compat = {
-      url = "github:edolstra/flake-compat";
-      flake = false;
-    };
   };
 
   outputs = {
@@ -24,12 +19,12 @@
   }:
     {
       nixosModules = {
-        budgie = import ./modules {budgie-overlay = self.overlays.budgie;};
+        budgie = import ./modules {inherit (self) overlays;};
         default = self.nixosModules.budgie;
       };
 
       overlays = {
-        budgie = import ./overlay.nix;
+        budgie = import ./overlay.nix {inherit (self) packages;};
         default = self.overlays.budgie;
       };
     }
@@ -52,24 +47,11 @@
           ];
         };
 
-        devShells.default = let
-          buildAll = pkgs.writeShellScriptBin "buildAll" ''
-            nix flake show --json | jq  '.packages."${system}"|keys[]' | xargs -I {} nix build .#{} -o result-{}
-          '';
-          buildVm = pkgs.writeShellScriptBin "buildVm" "nixos-rebuild build-vm --flake .#${system}";
-          runVm = pkgs.writeShellScriptBin "runVm" "buildVm && ./result/bin/run-nixos-vm";
-        in
-          pkgs.mkShell {
-            inherit (self.checks.${system}.pre-commit-hook) shellHook;
-            buildInputs = with pkgs; [
-              rnix-lsp
-              nixpkgs-fmt
-              jq
-              buildAll
-              buildVm
-              runVm
-            ];
-          };
+        devShells.default = import ./shell.nix {
+          inherit pkgs;
+          inherit system;
+          inherit (self) checks;
+        };
 
         checks = {
           pre-commit-hook = pre-commit-hooks.lib.${system}.run {
