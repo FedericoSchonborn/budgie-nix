@@ -24,13 +24,7 @@
   }:
     {
       nixosModules = {
-        budgie = {
-          nixpkgs.overlays = [self.overlays.budgie];
-          imports = [
-            ./nixos.nix
-          ];
-        };
-
+        budgie = import ./modules {budgie-overlay = self.overlays.budgie;};
         default = self.nixosModules.budgie;
       };
 
@@ -48,7 +42,7 @@
       system: let
         pkgs = import nixpkgs {inherit system;};
       in {
-        packages = import ./packages.nix {inherit pkgs;};
+        packages = import ./packages {inherit pkgs;};
 
         nixosConfigurations = nixpkgs.lib.nixosSystem {
           inherit system;

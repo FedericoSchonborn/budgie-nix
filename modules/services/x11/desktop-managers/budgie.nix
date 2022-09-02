@@ -10,6 +10,13 @@ in {
   options.services.xserver.desktopManager.budgie = {
     enable = mkEnableOption "Budgie Desktop";
 
+    sessionPath = mkOption {
+      # TODO: Description.
+      type = with types; listOf package;
+      default = [];
+      example = literalExpression "[ pkgs.budgie.budgie-desktop-view ]";
+    };
+
     appletPackages = mkOption {
       # TODO: Better description.
       description = "Budgie Desktop Applets";
@@ -22,12 +29,24 @@ in {
   config = mkIf cfg.enable {
     services.xserver.displayManager.sessionPackages = with pkgs; [budgie.budgie-desktop];
 
+    environment.extraInit = ''
+      ${concatMapStrings (p: ''
+          if [ -d "${p}/share/gsettings-schemas/${p.name}" ]; then
+            export XDG_DATA_DIRS=$XDG_DATA_DIRS''${XDG_DATA_DIRS:+:}${p}/share/gsettings-schemas/${p.name}
+          fi
+          if [ -d "${p}/lib/girepository-1.0" ]; then
+            export GI_TYPELIB_PATH=$GI_TYPELIB_PATH''${GI_TYPELIB_PATH:+:}${p}/lib/girepository-1.0
+            export LD_LIBRARY_PATH=$LD_LIBRARY_PATH''${LD_LIBRARY_PATH:+:}${p}/lib
+          fi
+        '')
+        cfg.sessionPath}
+    '';
+
     environment.systemPackages = with pkgs;
       [
         # Budgie Desktop.
         budgie.budgie-backgrounds
         budgie.budgie-desktop
-        budgie.budgie-desktop-view
         budgie.budgie-control-center
         budgie.budgie-screensaver
 
@@ -45,6 +64,9 @@ in {
         # Network Manager applet.
         optional config.networking.networkmanager.enable networkmanagerapplet
       );
+
+    # Enable Budgie Desktop View by default.
+    programs.budgie-desktop-view.enable = mkDefault true;
 
     # Required by backgrounds.
     environment.pathsToLink = [
