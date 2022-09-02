@@ -1,4 +1,5 @@
 {
+  lib,
   stdenv,
   fetchurl,
   fetchpatch,
@@ -49,4 +50,16 @@ in
     preInstall = ''
       substituteInPlace ../scripts/mesonPostInstall.sh --replace "update-desktop-database -q" "update-desktop-database $out/share/applications"
     '';
+
+    meta = with lib; {
+      description = "Official Budgie desktop icons application/implementation";
+      longDescription = ''
+        Budgie Desktop View is the official Budgie desktop icons application/implementation.
+      '';
+      homepage = "https://blog.buddiesofbudgie.org/";
+      downloadPage = "https://github.com/BuddiesOfBudgie/budgie-desktop-view/releases";
+      mainProgram = "org.buddiesofbudgie.budgie-desktop-view";
+      platforms = platforms.linux;
+      license = licenses.asl20;
+    };
   }

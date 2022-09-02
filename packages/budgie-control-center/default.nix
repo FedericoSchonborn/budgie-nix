@@ -1,4 +1,5 @@
 {
+  lib,
   stdenv,
   fetchurl,
   meson,
@@ -90,4 +91,19 @@ in
       gsound
       krb5
     ];
+
+    meta = with lib; {
+      description = "A fork of GNOME Control Center for the Budgie 10 Series";
+      longDescription = ''
+        Budgie Control Center is a fork of GNOME Settings / GNOME Control Center
+        with the intent of providing a simplified list of settings that are
+        applicable to the Budgie 10 series, along with any small quality-of-life
+        settings.
+      '';
+      homepage = "https://blog.buddiesofbudgie.org/";
+      downloadPage = "https://github.com/BuddiesOfBudgie/budgie-control-center/releases";
+      mainProgram = "budgie-control-center";
+      platforms = platforms.linux;
+      license = licenses.gpl2Plus;
+    };
   }

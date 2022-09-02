@@ -1,4 +1,5 @@
 {
+  lib,
   stdenv,
   fetchurl,
   meson,
@@ -44,4 +45,20 @@ in
       libgnomekbd
       linux-pam
     ];
+
+    meta = with lib; {
+      description = "A fork of old GNOME Screensaver for purposes of providing an authentication prompt on wake";
+      longDescription = ''
+        Budgie Screensaver is a fork of gnome-screensaver intended for use with
+        Budgie Desktop and is similar in purpose to other screensavers such as
+        MATE Screensaver. This repository and its respective software should
+        largely be considered as being in "maintenance mode", only updating to
+        resolve FTBFS issues or reflect changes in the GNOME Stack.
+      '';
+      homepage = "https://blog.buddiesofbudgie.org/";
+      downloadPage = "https://github.com/BuddiesOfBudgie/budgie-screensaver/releases";
+      mainProgram = "budgie-screensaver";
+      platforms = platforms.linux;
+      license = licenses.gpl2Only;
+    };
   }

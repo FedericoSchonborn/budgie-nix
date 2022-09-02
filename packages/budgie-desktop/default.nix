@@ -1,4 +1,5 @@
 {
+  lib,
   stdenv,
   fetchurl,
   meson,
@@ -80,4 +81,23 @@ in
     passthru.providedSessions = [
       "budgie-desktop"
     ];
+
+    # NOTE: No mainProgram because Budgie has multiple components (panel, runner, polkit-dialog).
+    meta = with lib; {
+      description = "A familiar, modern desktop environment";
+      longDescription = ''
+        The Budgie Desktop is a feature-rich, modern desktop designed to keep out the way of the user.
+      '';
+      homepage = "https://blog.buddiesofbudgie.org/";
+      downloadPage = "https://github.com/BuddiesOfBudgie/budgie-desktop/releases";
+      platforms = platforms.linux;
+      license = with licenses; [
+        # LICENSE
+        gpl2Plus
+        # LICENSE.LGPL2.1
+        lgpl21Plus
+        # data/backgrounds (see README.md)
+        cc-by-sa-30
+      ];
+    };
   }

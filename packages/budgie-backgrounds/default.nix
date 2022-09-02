@@ -39,6 +39,8 @@ in
         Budgie Backgrounds is the default set of background images for the Budgie Desktop.
       '';
       homepage = "https://blog.buddiesofbudgie.org/";
+      downloadPage = "https://github.com/BuddiesOfBudgie/budgie-backgrounds/releases";
+      platforms = platforms.linux;
       license = licenses.cc0;
     };
   }

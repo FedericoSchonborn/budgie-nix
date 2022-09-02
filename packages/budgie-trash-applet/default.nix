@@ -1,4 +1,5 @@
 {
+  lib,
   stdenv,
   fetchurl,
   meson,
@@ -34,4 +35,15 @@ in
       libnotify
       budgie-desktop
     ];
+
+    meta = with lib; {
+      description = "The default background set for the Budgie Desktop";
+      longDescription = ''
+        Budgie Backgrounds is the default set of background images for the Budgie Desktop.
+      '';
+      homepage = "https://blog.buddiesofbudgie.org/";
+      downloadPage = "https://github.com/BuddiesOfBudgie/budgie-backgrounds/releases";
+      platforms = platforms.linux;
+      license = licenses.asl20;
+    };
   }
