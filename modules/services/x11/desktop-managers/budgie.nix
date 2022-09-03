@@ -83,7 +83,7 @@ in {
     services.dbus.enable = true;
     services.dbus.packages = with pkgs; [budgie.budgie-control-center];
 
-    # Required by Budgie Desktop.
+    # Required by Budgie Polkit Dialog.
     security.polkit.enable = true;
 
     # Required by Budgie Screensaver.
