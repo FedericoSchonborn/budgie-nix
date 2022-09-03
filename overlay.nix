@@ -11,15 +11,17 @@
 
   # Budgie Extras
   budgieApplets.budgie-app-launcher = packages.${prev.system}.budgie-app-launcher;
-  budgieApplets.budgie-app-launcher = pacakges.${prev.system}.budgie-app-launcher;
-  budgieApplets.budgie-applications-menu = pacakges.${prev.system}.budgie-applications-menu;
-  budgieApplets.budgie-brightness-controller = pacakges.${prev.system}.budgie-brightness-controller;
-  budgieApplets.budgie-fuzzyclock = pacakges.${prev.system}.budgie-fuzzyclock;
-  budgieApplets.budgie-kangaroo = pacakges.${prev.system}.budgie-kangaroo;
-  budgieApplets.budgie-keyboard-autoswitch = pacakges.${prev.system}.budgie-keyboard-autoswitch;
-  budgieApplets.budgie-network-manager = pacakges.${prev.system}.budgie-network-manager;
-  budgieApplets.budgie-quicknote = pacakges.${prev.system}.budgie-quicknote;
-  budgieApplets.budgie-rotation-lock = pacakges.${prev.system}.budgie-rotation-lock;
-  budgieApplets.budgie-trash = pacakges.${prev.system}.budgie-trash;
-  budgieApplets.budgie-workspace-stopwatch = pacakges.${prev.system}.budgie-workspace-stopwatch;
+  budgieApplets.budgie-applications-menu = packages.${prev.system}.budgie-applications-menu;
+  budgieApplets.budgie-brightness-controller = packages.${prev.system}.budgie-brightness-controller;
+  budgieApplets.budgie-fuzzyclock = packages.${prev.system}.budgie-fuzzyclock;
+  budgieApplets.budgie-kangaroo = packages.${prev.system}.budgie-kangaroo;
+  budgieApplets.budgie-keyboard-autoswitch = packages.${prev.system}.budgie-keyboard-autoswitch;
+  budgieApplets.budgie-network-manager = packages.${prev.system}.budgie-network-manager;
+  budgieApplets.budgie-quicknote = packages.${prev.system}.budgie-quicknote;
+  budgieApplets.budgie-rotation-lock = packages.${prev.system}.budgie-rotation-lock;
+  budgieApplets.budgie-trash = packages.${prev.system}.budgie-trash;
+  budgieApplets.budgie-workspace-stopwatch = packages.${prev.system}.budgie-workspace-stopwatch;
+
+  # Themes
+  pocillo-gtk-theme = packages.${prev.system}.pocillo-gtk-theme;
 }

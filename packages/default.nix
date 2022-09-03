@@ -5,11 +5,16 @@
   budgieExtras = import ./budgie-extras {inherit pkgs budgie-desktop;};
 in
   rec {
+    inherit budgie-screensaver budgie-desktop;
+
     budgie-backgrounds = pkgs.callPackage ./budgie-backgrounds.nix {};
     budgie-control-center = pkgs.callPackage ./budgie-control-center.nix {};
     budgie-desktop-view = pkgs.callPackage ./budgie-desktop-view.nix {};
 
     # Third-party applets
     budgie-trash-applet = pkgs.callPackage ./budgie-trash-applet.nix {inherit budgie-desktop;};
+
+    # Themes
+    pocillo-gtk-theme = pkgs.callPackage ./pocillo-gtk-theme {};
   }
   // budgieExtras
