@@ -1,24 +1,21 @@
 {
   lib,
   stdenv,
-  fetchFromGitHub,
+  fetchurl,
   meson,
   ninja,
   imagemagick,
   jhead,
 }: let
   pname = "budgie-backgrounds";
-  version = "unstable-2022-08-30";
-  rev = "f0944f81359e7eb78c54fd9329b11fc2e46af2df";
+  version = "0.1";
 in
   stdenv.mkDerivation {
     inherit pname version;
 
-    src = fetchFromGitHub {
-      inherit rev;
-      owner = "BuddiesOfBudgie";
-      repo = pname;
-      sha256 = "Z9YpcpBXNLVzsGzQ/EoM7E4YV5etSoJYbkhzz9Pbb1I=";
+    src = fetchurl {
+      url = "https://github.com/BuddiesOfBudgie/${pname}/releases/download/v${version}/${pname}-v${version}.tar.xz";
+      sha256 = "0mf6sclq7gb3fkga5h03913z0j2nry8v4x85d0s4hc6aqc7jkjh6";
     };
 
     nativeBuildInputs = [
