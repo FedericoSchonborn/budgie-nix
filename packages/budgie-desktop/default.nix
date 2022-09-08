@@ -42,6 +42,10 @@ in
       sha256 = "d3VpnqZNcxfkAEt1HM1aseON8XLOF6vCQbiiK7McHNs=";
     };
 
+    patches = [
+      ./0001-Add-environment-variable-overrides-for-plugin-paths.patch
+    ];
+
     nativeBuildInputs = [
       meson
       ninja

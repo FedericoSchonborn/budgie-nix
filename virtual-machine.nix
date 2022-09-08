@@ -1,13 +1,8 @@
-{
-  config,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   fileSystems."/".label = "fuck-off-flake-check";
   boot.loader.grub.devices = ["/"];
 
   documentation.nixos.enable = false;
-  environment.systemPackages = with pkgs; [pocillo-gtk-theme];
   services.xserver.desktopManager.budgie.appletPackages = with pkgs.budgieApplets; [budgie-trash-applet budgie-app-launcher];
   services.xserver.desktopManager.budgie.enable = true;
   services.xserver.displayManager.autoLogin.enable = true;

@@ -3,6 +3,7 @@
   budgie.budgie-backgrounds = packages.${prev.system}.budgie-backgrounds;
   budgie.budgie-control-center = packages.${prev.system}.budgie-control-center;
   budgie.budgie-desktop = packages.${prev.system}.budgie-desktop;
+  budgie.budgie-desktop-with-applets = packages.${prev.system}.budgie-desktop-with-applets;
   budgie.budgie-desktop-view = packages.${prev.system}.budgie-desktop-view;
   budgie.budgie-screensaver = packages.${prev.system}.budgie-screensaver;
 
@@ -21,7 +22,4 @@
   budgieApplets.budgie-rotation-lock = packages.${prev.system}.budgie-rotation-lock;
   budgieApplets.budgie-trash = packages.${prev.system}.budgie-trash;
   budgieApplets.budgie-workspace-stopwatch = packages.${prev.system}.budgie-workspace-stopwatch;
-
-  # Themes
-  pocillo-gtk-theme = packages.${prev.system}.pocillo-gtk-theme;
 }

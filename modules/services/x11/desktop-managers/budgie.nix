@@ -46,7 +46,9 @@ in {
       [
         # Budgie Desktop.
         budgie.budgie-backgrounds
-        budgie.budgie-desktop
+        (budgie.budgie-desktop-with-applets.override {
+          applets = cfg.appletPackages;
+        })
         budgie.budgie-control-center
         budgie.budgie-screensaver
 
@@ -59,7 +61,6 @@ in {
         # Required by Budgie Menu.
         gnome-menus
       ]
-      ++ cfg.appletPackages
       ++ (
         # Network Manager applet.
         optional config.networking.networkmanager.enable networkmanagerapplet
