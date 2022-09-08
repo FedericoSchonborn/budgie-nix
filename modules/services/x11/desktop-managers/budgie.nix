@@ -2,27 +2,39 @@
   lib,
   config,
   pkgs,
+  utils,
   ...
 }:
 with lib; let
   cfg = config.services.xserver.desktopManager.budgie;
-in {
-  options.services.xserver.desktopManager.budgie = {
-    enable = mkEnableOption "Budgie Desktop";
 
-    sessionPath = mkOption {
+  notExcluded = pkg: mkDefault (!(elem pkg config.environment.budgie.excludePackages));
+in {
+  options = {
+    services.xserver.desktopManager.budgie = {
+      enable = mkEnableOption "Budgie Desktop";
+
+      sessionPath = mkOption {
+        # TODO: Description.
+        type = with types; listOf package;
+        default = [];
+        example = literalExpression "[ pkgs.budgie.budgie-desktop-view ]";
+      };
+
+      appletPackages = mkOption {
+        # TODO: Better description.
+        description = "Budgie Desktop Applets";
+        type = with types; listOf package;
+        default = [];
+        example = literalExpression "[ pkgs.budgieApplets.budgie-trash-applet ]";
+      };
+    };
+
+    environment.budgie.excludePackages = mkOption {
       # TODO: Description.
       type = with types; listOf package;
       default = [];
-      example = literalExpression "[ pkgs.budgie.budgie-desktop-view ]";
-    };
-
-    appletPackages = mkOption {
-      # TODO: Better description.
-      description = "Budgie Desktop Applets";
-      type = with types; listOf package;
-      default = [];
-      example = literalExpression "[ pkgs.budgieApplets.budgie-trash-applet ]";
+      example = literalExpression "[ pkgs.gnome-console ]";
     };
   };
 
@@ -62,14 +74,36 @@ in {
         gnome-menus
       ]
       ++ (
-        # Network Manager applet.
-        optional config.networking.networkmanager.enable networkmanagerapplet
+        utils.removePackagesByName [
+          celluloid
+          gnome-console
+          gnome.eog
+          gnome.evince
+          gnome.file-roller
+          gnome.gnome-calculator
+          gnome.gnome-disk-utility
+          gnome.gnome-screenshot
+          gnome.gnome-system-monitor
+          gnome-text-editor
+          gnome.nautilus
+        ]
+        config.environment.budgie.excludePackages
       );
+
+    # Default programs.
+    programs.evince.enable = notExcluded pkgs.gnome.evince;
+    programs.file-roller.enable = notExcluded pkgs.gnome.file-roller;
+    programs.gnome-disks.enable = notExcluded pkgs.gnome.gnome-disk-utility;
+    services.gnome.sushi.enable = notExcluded pkgs.gnome.sushi;
+
+    # Enable NM Applet (non-Indicator) if NetworkManager is enabled.
+    programs.nm-applet.enable = config.networking.networkmanager.enable;
+    programs.nm-applet.indicator = mkDefault false;
 
     # Enable Budgie Desktop View by default.
     programs.budgie-desktop-view.enable = mkDefault true;
 
-    # Required by backgrounds.
+    # Required by backgrounds and applets.
     environment.pathsToLink = [
       "/share"
     ];
