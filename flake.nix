@@ -43,6 +43,7 @@
           inherit system;
           modules = [
             self.nixosModules.budgie
+            {nixpkgs.overlays = [self.overlays.budgie];}
             ./virtual-machine.nix
           ];
         };
