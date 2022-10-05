@@ -22,11 +22,11 @@ jobs:
       - name: Setup Cachix
         uses: cachix/cachix-action@v10
         with:
-          name: ablescript
+          name: budgie
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
 
       - name: Push Flake inputs
-        run: nix flake archive --json | jq -r '.path,(.inputs | to_entries[].value.path)' | cachix push ablescript
+        run: nix flake archive --json | jq -r '.path,(.inputs | to_entries[].value.path)' | cachix push budgie
 
       - name: Push packages
-        run: nix build --json | jq -r '.[].outputs | to_entries[].value' | cachix push ablescript
+        run: nix build --json | jq -r '.[].outputs | to_entries[].value' | cachix push budgie
