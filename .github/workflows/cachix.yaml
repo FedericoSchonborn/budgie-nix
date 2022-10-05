@@ -1,0 +1,32 @@
+name: Cachix
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  push:
+    name: Push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v17
+
+      - name: Setup Cachix
+        uses: cachix/cachix-action@v10
+        with:
+          name: ablescript
+          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
+
+      - name: Push Flake inputs
+        run: nix flake archive --json | jq -r '.path,(.inputs | to_entries[].value.path)' | cachix push ablescript
+
+      - name: Push packages
+        run: nix build --json | jq -r '.[].outputs | to_entries[].value' | cachix push ablescript
