@@ -30,7 +30,7 @@ pkgs.callPackage
     libnotify,
     networkmanager,
     libnma,
-    libwnck3,
+    libwnck,
     ...
   }:
     stdenv.mkDerivation rec {
@@ -65,7 +65,7 @@ pkgs.callPackage
         libnotify
         networkmanager
         libnma
-        libwnck3
+        libwnck
       ];
 
       mesonFlags = [
