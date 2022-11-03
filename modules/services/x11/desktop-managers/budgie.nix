@@ -39,13 +39,16 @@ in {
   };
 
   config = mkIf cfg.enable {
-    services.xserver.displayManager.sessionPackages = with pkgs; [budgie.budgie-desktop];
+    services.xserver.displayManager.sessionPackages = with pkgs; [
+      budgie.budgie-desktop
+    ];
 
     environment.extraInit = ''
       ${concatMapStrings (p: ''
           if [ -d "${p}/share/gsettings-schemas/${p.name}" ]; then
             export XDG_DATA_DIRS=$XDG_DATA_DIRS''${XDG_DATA_DIRS:+:}${p}/share/gsettings-schemas/${p.name}
           fi
+
           if [ -d "${p}/lib/girepository-1.0" ]; then
             export GI_TYPELIB_PATH=$GI_TYPELIB_PATH''${GI_TYPELIB_PATH:+:}${p}/lib/girepository-1.0
             export LD_LIBRARY_PATH=$LD_LIBRARY_PATH''${LD_LIBRARY_PATH:+:}${p}/lib
@@ -73,8 +76,7 @@ in {
         # Required by Budgie Menu.
         gnome-menus
       ]
-      ++ (
-        utils.removePackagesByName [
+      ++ (utils.removePackagesByName [
           celluloid
           gnome-console
           gnome.eog
@@ -87,8 +89,7 @@ in {
           gnome-text-editor
           gnome.nautilus
         ]
-        config.environment.budgie.excludePackages
-      );
+        config.environment.budgie.excludePackages);
 
     # Default programs.
     programs.evince.enable = notExcluded pkgs.gnome.evince;
@@ -116,7 +117,9 @@ in {
     networking.networkmanager.enable = mkDefault true;
     services.colord.enable = mkDefault true;
     services.dbus.enable = true;
-    services.dbus.packages = with pkgs; [budgie.budgie-control-center];
+    services.dbus.packages = with pkgs; [
+      budgie.budgie-control-center
+    ];
 
     # Required by Budgie Polkit Dialog.
     security.polkit.enable = true;

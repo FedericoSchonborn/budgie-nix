@@ -7,8 +7,7 @@
   flag ? name,
   ...
 }:
-pkgs.callPackage
-({
+pkgs.callPackage ({
     lib,
     stdenv,
     fetchurl,
@@ -86,5 +85,4 @@ pkgs.callPackage
         platforms = platforms.linux;
         license = licenses.gpl3Plus;
       };
-    })
-{}
+    }) {}

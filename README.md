@@ -7,7 +7,7 @@ Nix Flake for Budgie Desktop.
 ```shell
 $ nix develop
 # Inside the `nix develop` shell:
-$ buildAll
+$ just build-all
 ```
 
 ## Run A Virtual Machine
@@ -15,5 +15,5 @@ $ buildAll
 ```shell
 $ nix develop
 # Inside the `nix develop` shell:
-$ runVm # or runFreshVm if you want a clean machine.
+$ just run-vm # or run-fresh-vm if you want a clean machine.
 ```

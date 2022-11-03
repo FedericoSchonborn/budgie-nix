@@ -3,6 +3,11 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
 
+    flake-compat = {
+      url = "github:edolstra/flake-compat";
+      flake = false;
+    };
+
     pre-commit-hooks = {
       url = "github:cachix/pre-commit-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -28,42 +33,41 @@
         default = self.overlays.budgie;
       };
     }
-    // flake-utils.lib.eachSystem
-    (with flake-utils.lib.system; [
-      aarch64-linux
-      x86_64-linux
-    ])
-    (
-      system: let
-        pkgs = import nixpkgs {inherit system;};
-      in {
-        packages = import ./packages {inherit pkgs;};
+    // flake-utils.lib.eachSystem (
+      with flake-utils.lib.system; [
+        aarch64-linux
+        x86_64-linux
+      ]
+    ) (system: let
+      pkgs = import nixpkgs {inherit system;};
+    in {
+      packages = import ./packages {inherit pkgs;};
 
-        nixosConfigurations = nixpkgs.lib.nixosSystem {
-          inherit system;
-          modules = [
-            self.nixosModules.budgie
-            {nixpkgs.overlays = [self.overlays.budgie];}
-            ./virtual-machine.nix
-          ];
+      nixosConfigurations = nixpkgs.lib.nixosSystem {
+        inherit system;
+
+        modules = [
+          self.nixosModules.budgie
+          {
+            nixpkgs.overlays = [self.overlays.budgie];
+          }
+          ./virtual-machine.nix
+        ];
+      };
+
+      devShells.default = pkgs.mkShell {
+        nativeBuildInputs = with pkgs; [
+          just
+        ];
+      };
+
+      checks = {
+        pre-commit-hook = pre-commit-hooks.lib.${system}.run {
+          src = ./.;
+          hooks = {alejandra.enable = true;};
         };
+      };
 
-        devShells.default = import ./shell.nix {
-          inherit pkgs;
-          inherit system;
-          inherit (self) checks;
-        };
-
-        checks = {
-          pre-commit-hook = pre-commit-hooks.lib.${system}.run {
-            src = ./.;
-            hooks = {
-              alejandra.enable = true;
-            };
-          };
-        };
-
-        formatter = pkgs.alejandra;
-      }
-    );
+      formatter = pkgs.alejandra;
+    });
 }
