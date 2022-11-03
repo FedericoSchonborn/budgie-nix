@@ -1,5 +1,7 @@
 # Budgie Overlay
 
+[![Cachix](https://github.com/FedericoSchonborn/nix-budgie/actions/workflows/cachix.yaml/badge.svg)](https://github.com/FedericoSchonborn/nix-budgie/actions/workflows/cachix.yaml)
+
 Nix Flake for Budgie Desktop.
 
 ## Build All Packages
