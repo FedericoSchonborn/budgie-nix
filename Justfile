@@ -27,4 +27,4 @@ packages := "budgie-app-launcher budgie-applications-menu budgie-backgrounds bud
 
 # Build the virtual machine.
 @build-vm:
-    nixos-rebuild build-vm --flake ".#{{ system }}" --verbose
+    nix build --print-build-logs ".#nixosConfigurations.budgie.config.system.build.vm"
