@@ -2,14 +2,14 @@
   lib,
   stdenv,
   fetchurl,
+  budgie-desktop,
+  gtk3,
+  libnotify,
+  libpeas,
   meson,
+  ninja,
   pkg-config,
   sassc,
-  ninja,
-  gtk3,
-  libpeas,
-  libnotify,
-  budgie-desktop,
 }:
 stdenv.mkDerivation rec {
   pname = "budgie-trash-applet";
@@ -28,10 +28,10 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    gtk3
-    libpeas
-    libnotify
     budgie-desktop
+    gtk3
+    libnotify
+    libpeas
   ];
 
   meta = with lib; {

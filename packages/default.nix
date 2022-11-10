@@ -1,16 +1,16 @@
 {pkgs, ...}: let
   corePackages = rec {
-    budgie-screensaver = pkgs.callPackage ./budgie-screensaver.nix {};
+    budgie-backgrounds = pkgs.callPackage ./budgie-backgrounds/default.nix {};
+    budgie-control-center = pkgs.callPackage ./budgie-control-center/default.nix {};
     budgie-desktop = pkgs.callPackage ./budgie-desktop {inherit budgie-screensaver;};
-    budgie-backgrounds = pkgs.callPackage ./budgie-backgrounds.nix {};
-    budgie-control-center = pkgs.callPackage ./budgie-control-center.nix {};
+    budgie-desktop-view = pkgs.callPackage ./budgie-desktop-view/default.nix {};
     budgie-desktop-with-applets = pkgs.callPackage ./budgie-desktop/wrapper.nix {inherit budgie-desktop;};
-    budgie-desktop-view = pkgs.callPackage ./budgie-desktop-view.nix {};
+    budgie-screensaver = pkgs.callPackage ./budgie-screensaver {};
   };
 
   # Third-party applets
   appletPackages = {
-    budgie-trash-applet = pkgs.callPackage ./budgie-trash-applet.nix {inherit (corePackages) budgie-desktop;};
+    budgie-trash-applet = pkgs.callPackage ./budgie-trash-applet/default.nix {inherit (corePackages) budgie-desktop;};
   };
 
   # Budgie Extras

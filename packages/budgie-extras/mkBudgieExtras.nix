@@ -7,30 +7,30 @@
   flag ? name,
   ...
 }:
-pkgs.callPackage ({
+pkgs.callPackage
+({
     lib,
     stdenv,
     fetchurl,
+    appstream,
+    glib,
     gnome,
-    pantheon,
+    gtk3,
+    intltool,
+    json-glib,
+    libgee,
+    libhandy_0,
+    libnma,
+    libnotify,
+    libpeas,
+    libsoup,
+    libwnck,
     meson,
+    networkmanager,
     ninja,
+    pantheon,
     pkg-config,
     vala,
-    intltool,
-    glib,
-    libpeas,
-    gtk3,
-    libgee,
-    libsoup,
-    appstream,
-    json-glib,
-    libhandy_0,
-    libnotify,
-    networkmanager,
-    libnma,
-    libwnck,
-    ...
   }:
     stdenv.mkDerivation rec {
       pname = "budgie-" + name;
@@ -42,29 +42,29 @@ pkgs.callPackage ({
       };
 
       nativeBuildInputs = [
+        glib
+        intltool
         meson
         ninja
-        vala
         pkg-config
-        intltool
-        glib
+        vala
       ];
 
       buildInputs = [
-        budgie-desktop
-        libpeas
-        gtk3
-        pantheon.granite
-        libgee
-        libsoup
         appstream
-        json-glib
-        libhandy_0
+        budgie-desktop
         gnome.gnome-settings-daemon
-        libnotify
-        networkmanager
+        gtk3
+        json-glib
+        libgee
+        libhandy_0
         libnma
+        libnotify
+        libpeas
+        libsoup
         libwnck
+        networkmanager
+        pantheon.granite
       ];
 
       mesonFlags = [
@@ -85,4 +85,5 @@ pkgs.callPackage ({
         platforms = platforms.linux;
         license = licenses.gpl3Plus;
       };
-    }) {}
+    })
+{}

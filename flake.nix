@@ -51,6 +51,7 @@
       default = pkgs.mkShell {
         packages = with pkgs; [
           just
+          jq
         ];
 
         shellHook = ''
@@ -69,5 +70,10 @@
     });
 
     formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
+  };
+
+  nixConfig = {
+    substituters = ["https://budgie.cachix.org"];
+    trusted-public-keys = ["budgie.cachix.org-1:Q8+2iOIXhwAaWq548T+r/oNeJdKEacolRY9sBBtOfeQ="];
   };
 }

@@ -3,14 +3,14 @@
   stdenv,
   fetchurl,
   fetchpatch,
+  desktop-file-utils,
+  glib,
+  gtk3,
+  intltool,
   meson,
   ninja,
   pkg-config,
   vala,
-  intltool,
-  glib,
-  gtk3,
-  desktop-file-utils,
   wrapGAppsHook,
 }:
 stdenv.mkDerivation rec {
@@ -31,12 +31,12 @@ stdenv.mkDerivation rec {
   ];
 
   nativeBuildInputs = [
+    desktop-file-utils
+    intltool
     meson
     ninja
     pkg-config
     vala
-    intltool
-    desktop-file-utils
     wrapGAppsHook
   ];
 

@@ -4,9 +4,6 @@ packages := "budgie-app-launcher budgie-applications-menu budgie-backgrounds bud
 @_default:
     just --list
 
-@print-system:
-    echo {{ system }}
-
 # Build all packages.
 @build-all:
     just build {{ packages }}

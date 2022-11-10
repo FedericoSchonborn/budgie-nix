@@ -2,10 +2,10 @@
   lib,
   stdenv,
   fetchurl,
-  meson,
-  ninja,
   imagemagick,
   jhead,
+  meson,
+  ninja,
 }:
 stdenv.mkDerivation rec {
   pname = "budgie-backgrounds";
@@ -17,10 +17,10 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
-    meson
-    ninja
     imagemagick
     jhead
+    meson
+    ninja
   ];
 
   preConfigure = ''

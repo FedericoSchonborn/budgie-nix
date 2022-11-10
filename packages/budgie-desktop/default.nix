@@ -2,33 +2,33 @@
   lib,
   stdenv,
   fetchurl,
+  accountsservice,
+  alsa-lib,
+  budgie-screensaver,
+  docbook-xsl-nons,
+  glib,
+  gnome,
+  gnome-desktop,
+  gnome-menus,
+  graphene,
+  gtk-doc,
+  gtk3,
+  ibus,
+  intltool,
+  libGL,
+  libnotify,
+  libpeas,
+  libpulseaudio,
+  libuuid,
+  libwnck,
+  mesa,
   meson,
   ninja,
   pkg-config,
-  vala,
-  budgie-screensaver,
-  gtk3,
-  libpeas,
-  libuuid,
-  ibus,
-  libnotify,
-  gnome-desktop,
-  gnome,
-  libwnck,
-  accountsservice,
-  intltool,
-  libpulseaudio,
-  alsa-lib,
-  sassc,
   polkit,
-  graphene,
-  gnome-menus,
+  sassc,
   upower,
-  gtk-doc,
-  glib,
-  libGL,
-  mesa,
-  docbook-xsl-nons,
+  vala,
   wrapGAppsHook,
 }:
 stdenv.mkDerivation rec {
@@ -45,39 +45,39 @@ stdenv.mkDerivation rec {
   ];
 
   nativeBuildInputs = [
+    docbook-xsl-nons
+    gtk-doc
+    intltool
     meson
     ninja
     pkg-config
     vala
-    intltool
-    gtk-doc
-    docbook-xsl-nons
     wrapGAppsHook
   ];
 
   buildInputs = [
-    budgie-screensaver
-    gtk3
-    libpeas
-    libuuid
-    ibus
-    libnotify
-    gnome-desktop
-    gnome.gnome-settings-daemon
-    libwnck
     accountsservice
-    libpulseaudio
     alsa-lib
-    sassc
-    polkit
-    graphene
-    gnome.mutter
+    budgie-screensaver
+    glib
+    gnome-desktop
     gnome-menus
     gnome.gnome-bluetooth_1_0
-    upower
-    glib
+    gnome.gnome-settings-daemon
+    gnome.mutter
+    graphene
+    gtk3
+    ibus
     libGL
+    libnotify
+    libpeas
+    libpulseaudio
+    libuuid
+    libwnck
     mesa
+    polkit
+    sassc
+    upower
   ];
 
   passthru.providedSessions = [
