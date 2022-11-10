@@ -26,10 +26,13 @@ jobs:
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
 
       - name: Push Flake inputs
-        run: nix flake archive --json | jq -r '.path,(.inputs | to_entries[].value.path)' | cachix push budgie
+        run: |
+          nix flake archive --json | jq -r '.path,(.inputs | to_entries[].value.path)' | cachix push budgie
+          nix flake archive --json --override-input nixpkgs "github:NixOS/nixpkgs/nixos-22.05" | jq -r '.path,(.inputs | to_entries[].value.path)' | cachix push budgie
 
       - name: Push packages
         run: |
           for package in $(nix flake show --json | jq -r '.packages."x86_64-linux" | to_entries[].key'); do
-            (nix build --print-build-logs --json ".#${package}" || exit 1) | jq -r '.[].outputs | to_entries[].value' | cachix push budgie
+            nix build --print-build-logs --json ".#${package}" | jq -r '.[].outputs | to_entries[].value' | cachix push budgie
+            nix build --print-build-logs --json ".#${package}" --override-input nixpkgs "github:NixOS/nixpkgs/nixos-22.05" | jq -r '.[].outputs | to_entries[].value' | cachix push budgie
           done
