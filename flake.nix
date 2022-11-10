@@ -45,14 +45,19 @@
       ];
     };
 
-    devShells.default = forAllSystems (system: let
+    devShells = forAllSystems (system: let
       pkgs = nixpkgs.legacyPackages.${system};
-    in
-      pkgs.mkShell {
-        nativeBuildInputs = with pkgs; [
+    in {
+      default = pkgs.mkShell {
+        packages = with pkgs; [
           just
         ];
-      });
+
+        shellHook = ''
+          ${checks.${system}.pre-commit-hook.shellHook}
+        '';
+      };
+    });
 
     checks = forAllSystems (system: {
       pre-commit-hook = pre-commit-hooks.lib.${system}.run {
