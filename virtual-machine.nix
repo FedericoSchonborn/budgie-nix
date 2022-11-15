@@ -6,8 +6,9 @@
   services.xserver.desktopManager.budgie.enable = true;
   services.xserver.displayManager.autoLogin.enable = true;
   services.xserver.displayManager.autoLogin.user = "vm";
-  services.xserver.displayManager.lightdm.greeters.slick.enable = true;
+  services.xserver.displayManager.lightdm.greeters.gtk.enable = true;
   services.xserver.enable = true;
+  time.timeZone = "UTC";
   users.users.vm.initialPassword = "vm";
   users.users.vm.isNormalUser = true;
   system.stateVersion = "22.11";

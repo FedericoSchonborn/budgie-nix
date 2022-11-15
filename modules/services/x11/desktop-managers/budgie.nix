@@ -75,6 +75,9 @@ in {
 
         # Required by Budgie Menu.
         gnome-menus
+
+        # Required by Budgie Control Center.
+        tzdata
       ]
       ++ (utils.removePackagesByName [
           celluloid
