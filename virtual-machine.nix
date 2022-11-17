@@ -8,6 +8,7 @@
   services.xserver.displayManager.autoLogin.user = "vm";
   services.xserver.displayManager.lightdm.greeters.gtk.enable = true;
   services.xserver.enable = true;
+  environment.systemPackages = with pkgs; [materia-theme papirus-icon-theme];
   time.timeZone = "UTC";
   users.users.vm.initialPassword = "vm";
   users.users.vm.isNormalUser = true;

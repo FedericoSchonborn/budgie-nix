@@ -74,7 +74,7 @@
 
   nixConfig = {
     extra-substituters = [
-      "https://budgie.cachix.org/"
+      "https://budgie.cachix.org"
     ];
     extra-trusted-public-keys = [
       "budgie.cachix.org-1:Q8+2iOIXhwAaWq548T+r/oNeJdKEacolRY9sBBtOfeQ="
