@@ -73,13 +73,11 @@
   };
 
   nixConfig = {
-    substituters = [
-      "https://budgie.cachix.org"
-      "https://cache.nixos.org"
+    extra-substituters = [
+      "https://budgie.cachix.org/"
     ];
-    trusted-public-keys = [
+    extra-trusted-public-keys = [
       "budgie.cachix.org-1:Q8+2iOIXhwAaWq548T+r/oNeJdKEacolRY9sBBtOfeQ="
-      "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
     ];
   };
 }
