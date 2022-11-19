@@ -1,4 +1,6 @@
 {
+  description = "NixOS/Home Manager packages and modules for the Budgie Desktop";
+
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
