@@ -67,6 +67,7 @@
         src = ./.;
         hooks = {
           alejandra.enable = true;
+          statix.enable = true;
         };
       };
     });

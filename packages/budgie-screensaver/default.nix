@@ -46,6 +46,8 @@ stdenv.mkDerivation rec {
     xorg.libXxf86vm
   ];
 
+  NIX_CFLAGS_COMPILE = "-D_POSIX_SOURCE";
+
   meta = with lib; {
     description = "A fork of old GNOME Screensaver for purposes of providing an authentication prompt on wake";
     longDescription = ''
