@@ -1,7 +1,7 @@
 {
   lib,
   stdenv,
-  fetchurl,
+  fetchFromGitHub,
   dbus-glib,
   glib,
   gnome-desktop,
@@ -21,9 +21,11 @@ stdenv.mkDerivation rec {
   pname = "budgie-screensaver";
   version = "5.1.0";
 
-  src = fetchurl {
-    url = "https://github.com/BuddiesOfBudgie/${pname}/releases/download/v${version}/${pname}-v${version}.tar.xz";
-    sha256 = "VjrD+EVynp5tGE0tvwNqs/Uf8kTCf1sobPy4mswUfww=";
+  src = fetchFromGitHub {
+    owner = "BuddiesOfBudgie";
+    repo = "${pname}";
+    rev = "v${version}";
+    sha256 = "N8x9hdbaMDisTbQPJedNO4UMLnCn+Q2hhm4udJZgQlc=";
   };
 
   nativeBuildInputs = [
@@ -46,7 +48,7 @@ stdenv.mkDerivation rec {
     xorg.libXxf86vm
   ];
 
-  NIX_CFLAGS_COMPILE = "-D_POSIX_SOURCE";
+  NIX_CFLAGS_COMPILE = "-D_POSIX_C_SOURCE";
 
   meta = with lib; {
     description = "A fork of old GNOME Screensaver for purposes of providing an authentication prompt on wake";

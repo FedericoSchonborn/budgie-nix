@@ -1,7 +1,7 @@
 {
   lib,
   stdenv,
-  fetchurl,
+  fetchFromGitHub,
   accountsservice,
   alsa-lib,
   budgie-screensaver,
@@ -35,9 +35,12 @@ stdenv.mkDerivation rec {
   pname = "budgie-desktop";
   version = "10.6.4";
 
-  src = fetchurl {
-    url = "https://github.com/BuddiesOfBudgie/${pname}/releases/download/v${version}/${pname}-v${version}.tar.xz";
-    sha256 = "d3VpnqZNcxfkAEt1HM1aseON8XLOF6vCQbiiK7McHNs=";
+  src = fetchFromGitHub {
+    owner = "BuddiesOfBudgie";
+    repo = "${pname}";
+    rev = "v${version}";
+    fetchSubmodules = true;
+    sha256 = "JfCKUNNdbyXvexrWWip8EpWVaW+PpwQ0vkrpr6M41ds=";
   };
 
   patches = [

@@ -8,6 +8,10 @@
 with lib; let
   cfg = config.services.xserver.desktopManager.budgie;
 
+  nixos-gsettings-overrides = pkgs.budgie.budgie-gsettings-overrides.override {
+    inherit (cfg) extraGSettingsOverrides extraGSettingsOverridePackages;
+  };
+
   notExcluded = pkg: mkDefault (!(elem pkg config.environment.budgie.excludePackages));
 in {
   options = {
@@ -27,6 +31,18 @@ in {
         type = with types; listOf package;
         default = [];
         example = literalExpression "[ pkgs.budgieApplets.budgie-trash-applet ]";
+      };
+
+      extraGSettingsOverrides = mkOption {
+        default = "";
+        type = types.lines;
+        description = "Additional gsettings overrides.";
+      };
+
+      extraGSettingsOverridePackages = mkOption {
+        default = [];
+        type = with types; listOf path;
+        description = "List of packages for which gsettings are overridden.";
       };
     };
 
@@ -67,6 +83,9 @@ in {
         budgie.budgie-control-center
         budgie.budgie-screensaver
 
+        # Provides `gsettings`.
+        glib
+
         # Create user directories.
         xdg-user-dirs
 
@@ -81,16 +100,21 @@ in {
       ]
       ++ (utils.removePackagesByName [
           celluloid
-          gnome-console
           gnome.eog
           gnome.evince
           gnome.file-roller
+          gnome.gedit
           gnome.gnome-calculator
           gnome.gnome-disk-utility
           gnome.gnome-screenshot
           gnome.gnome-system-monitor
-          gnome-text-editor
+          gnome.gnome-terminal
           gnome.nautilus
+          gnome.sushi
+          materia-theme
+          papirus-icon-theme
+          bibata-cursors
+          nixos-gsettings-overrides
         ]
         config.environment.budgie.excludePackages);
 
@@ -111,6 +135,21 @@ in {
     environment.pathsToLink = [
       "/share"
     ];
+
+    environment.sessionVariables.NIX_GSETTINGS_OVERRIDES_DIR = "${nixos-gsettings-overrides}/share/gsettings-schemas/nixos-gsettings-overrides/glib-2.0/schemas";
+
+    fonts.fonts = with pkgs; [
+      noto-fonts
+      hack-font
+    ];
+
+    fonts.fontconfig.defaultFonts = {
+      emoji = ["Noto Emoji Color"];
+      monospace = ["Hack"];
+      sansSerif = ["Noto Sans"];
+    };
+
+    services.xserver.updateDbusEnvironment = true;
 
     # Required by the Budgie Desktop session.
     programs.dconf.enable = true;

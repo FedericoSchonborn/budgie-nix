@@ -11,7 +11,7 @@ pkgs.callPackage
 ({
     lib,
     stdenv,
-    fetchurl,
+    fetchFromGitHub,
     appstream,
     glib,
     gnome,
@@ -19,7 +19,7 @@ pkgs.callPackage
     intltool,
     json-glib,
     libgee,
-    libhandy_0,
+    libhandy,
     libnma,
     libnotify,
     libpeas,
@@ -34,11 +34,14 @@ pkgs.callPackage
   }:
     stdenv.mkDerivation rec {
       pname = "budgie-" + name;
-      version = "1.4.0";
+      version = "1.5.0";
 
-      src = fetchurl {
-        url = "https://github.com/UbuntuBudgie/budgie-extras/releases/download/v${version}/budgie-extras-${version}.tar.xz";
-        sha256 = "13mcqmd9ykyc36m3fmi4ns5mj9alqsxfjsj9d5mwk9zs4zs21zlv";
+      src = fetchFromGitHub {
+        owner = "UbuntuBudgie";
+        repo = "budgie-extras";
+        rev = "v${version}";
+        fetchSubmodules = true;
+        sha256 = "FBtWZxHgwTHd38aekB+X4Qx+WlTENnOOzDztn/DPtwQ=";
       };
 
       nativeBuildInputs = [
@@ -57,7 +60,7 @@ pkgs.callPackage
         gtk3
         json-glib
         libgee
-        libhandy_0
+        libhandy
         libnma
         libnotify
         libpeas

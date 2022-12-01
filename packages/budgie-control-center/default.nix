@@ -1,7 +1,7 @@
 {
   lib,
   stdenv,
-  fetchurl,
+  fetchFromGitHub,
   accountsservice,
   clutter,
   clutter-gtk,
@@ -42,9 +42,12 @@ stdenv.mkDerivation rec {
   pname = "budgie-control-center";
   version = "1.1.1";
 
-  src = fetchurl {
-    url = "https://github.com/BuddiesOfBudgie/${pname}/releases/download/v${version}/${pname}-${version}.tar.xz";
-    sha256 = "Cg8nzuPloz8X5rNK1pi0pU/o73wdIVoKqaB0MXIqyWM=";
+  src = fetchFromGitHub {
+    owner = "BuddiesOfBudgie";
+    repo = "${pname}";
+    rev = "v${version}";
+    fetchSubmodules = true;
+    sha256 = "d9HdtMoDZHl8rENYO3jXSlzTewgna95qBDMobk2fEcg=";
   };
 
   nativeBuildInputs = [

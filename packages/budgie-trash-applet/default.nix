@@ -1,7 +1,7 @@
 {
   lib,
   stdenv,
-  fetchurl,
+  fetchFromGitHub,
   budgie-desktop,
   gtk3,
   libnotify,
@@ -15,9 +15,11 @@ stdenv.mkDerivation rec {
   pname = "budgie-trash-applet";
   version = "2.1.1";
 
-  src = fetchurl {
-    url = "https://github.com/EbonJaeger/${pname}/archive/refs/tags/v${version}-1.tar.gz";
-    sha256 = "1qr5cafi748avhqc3p8zczvhyi1g571i443kz6244jnpp2h4m7hj";
+  src = fetchFromGitHub {
+    owner = "EbonJaeger";
+    repo = "${pname}";
+    rev = "v${version}";
+    sha256 = "Wjc/NYnnvjYzeIbiBW1qMlSMSBmVSeLochHaWOD2rL8=";
   };
 
   nativeBuildInputs = [

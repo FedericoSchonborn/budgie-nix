@@ -1,7 +1,7 @@
 {
   lib,
   stdenv,
-  fetchurl,
+  fetchFromGitHub,
   imagemagick,
   jhead,
   meson,
@@ -11,9 +11,11 @@ stdenv.mkDerivation rec {
   pname = "budgie-backgrounds";
   version = "0.1";
 
-  src = fetchurl {
-    url = "https://github.com/BuddiesOfBudgie/${pname}/releases/download/v${version}/${pname}-v${version}.tar.xz";
-    sha256 = "0mf6sclq7gb3fkga5h03913z0j2nry8v4x85d0s4hc6aqc7jkjh6";
+  src = fetchFromGitHub {
+    owner = "BuddiesOfBudgie";
+    repo = "${pname}";
+    rev = "v${version}";
+    sha256 = "pDFd+WvWOPgDoSffmX9mzjDQbhePsJV1wGqmPDcnOlw=";
   };
 
   nativeBuildInputs = [

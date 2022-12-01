@@ -1,7 +1,7 @@
 {
   lib,
   stdenv,
-  fetchurl,
+  fetchFromGitHub,
   fetchpatch,
   desktop-file-utils,
   glib,
@@ -17,9 +17,11 @@ stdenv.mkDerivation rec {
   pname = "budgie-desktop-view";
   version = "1.2";
 
-  src = fetchurl {
-    url = "https://github.com/BuddiesOfBudgie/${pname}/releases/download/v${version}/${pname}-v${version}.tar.xz";
-    sha256 = "8399fae4326e5a21dda889bd89cb16ed8201f2854dc5cbc12394b90420d4cf2e";
+  src = fetchFromGitHub {
+    owner = "BuddiesOfBudgie";
+    repo = "${pname}";
+    rev = "v${version}";
+    sha256 = "g7UziBmeqKlNzEBgySPgr+3h17Us67xmOAzOhIHwJl0=";
   };
 
   patches = [

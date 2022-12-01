@@ -22,14 +22,14 @@
     ...
   }: let
     forAllSystems = nixpkgs.lib.genAttrs ["x86_64-linux" "aarch64-linux"];
-  in rec {
+  in {
     nixosModules = {
       budgie = import ./modules {inherit (self) overlays;};
       default = self.nixosModules.budgie;
     };
 
     overlays = {
-      budgie = import ./overlay.nix {inherit (self) packages;};
+      budgie = import ./overlays/budgie {inherit (self) packages;};
       default = self.overlays.budgie;
     };
 
@@ -43,7 +43,7 @@
         {
           nixpkgs.overlays = [self.overlays.budgie];
         }
-        ./virtual-machine.nix
+        ./machines/budgie
       ];
     };
 
@@ -57,7 +57,7 @@
         ];
 
         shellHook = ''
-          ${checks.${system}.pre-commit-hook.shellHook}
+          ${self.checks.${system}.pre-commit-hook.shellHook}
         '';
       };
     });

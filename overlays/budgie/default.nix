@@ -6,6 +6,7 @@
   budgie.budgie-desktop-with-applets = packages.${prev.system}.budgie-desktop-with-applets;
   budgie.budgie-desktop-view = packages.${prev.system}.budgie-desktop-view;
   budgie.budgie-screensaver = packages.${prev.system}.budgie-screensaver;
+  budgie.budgie-gsettings-overrides = packages.${prev.system}.budgie-gsettings-overrides;
 
   # Third-party applets
   budgieApplets.budgie-trash-applet = packages.${prev.system}.budgie-trash-applet;
