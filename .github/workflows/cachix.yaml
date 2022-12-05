@@ -16,6 +16,7 @@ jobs:
       matrix:
         nixpkgs:
           - nixos-22.05
+          - nixos-22.11
           - nixos-unstable
     steps:
       - name: Checkout
