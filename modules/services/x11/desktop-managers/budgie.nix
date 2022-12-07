@@ -127,12 +127,16 @@ in {
       ]
       ++ (utils.removePackagesByName [
           cinnamon.nemo
+          cinnamon.pix
           cinnamon.xreader
           cinnamon.xviewer
+          galculator
           gnome.file-roller
+          gnome.gnome-disk-utility
           gnome.gnome-screenshot
           gnome.gnome-system-monitor
           gnome.gnome-terminal
+          rhythmbox
           xed-editor
           xplayer
           qogir-theme
@@ -143,6 +147,8 @@ in {
 
     # Default programs.
     programs.file-roller.enable = notExcluded pkgs.gnome.file-roller;
+    programs.gnome-disks.enable = notExcluded pkgs.gnome.gnome-disk-utility;
+    programs.gnome-terminal.enable = notExcluded pkgs.gnome.gnome-terminal;
 
     # Enable NM Applet (non-Indicator) if NetworkManager is enabled.
     programs.nm-applet.enable = true;
@@ -159,14 +165,13 @@ in {
     environment.sessionVariables.NIX_GSETTINGS_OVERRIDES_DIR = "${nixos-gsettings-overrides}/share/gsettings-schemas/nixos-gsettings-overrides/glib-2.0/schemas";
 
     fonts.fonts = with pkgs; [
-      noto-fonts
-      hack-font
+      inter
+      fira-code
     ];
 
     fonts.fontconfig.defaultFonts = {
-      emoji = mkDefault ["Noto Emoji Color"];
-      monospace = mkDefault ["Hack"];
-      sansSerif = mkDefault ["Noto Sans"];
+      sansSerif = mkDefault ["Inter"];
+      monospace = mkDefault ["Fira Code"];
     };
 
     qt5 = {

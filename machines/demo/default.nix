@@ -19,18 +19,15 @@
   };
 
   environment.systemPackages = with pkgs; [
-    # Web browser
+    # Web Browser
     firefox
-
-    # Budgie-compatible themes
-    arc-theme
-    materia-theme
-    pocillo-gtk-theme
+    # Mail/Calendar
+    thunderbird
   ];
 
   users.users.demo = {
     description = "Demo";
-    initialPassword = "demo";
+    password = "demo";
     isNormalUser = true;
   };
 

@@ -2,6 +2,7 @@
   lib,
   runCommand,
   budgie-desktop,
+  budgie-desktop-view,
   glib,
   gsettings-desktop-schemas,
   nixos-background ? null,
@@ -20,26 +21,30 @@
       picture-uri="file://${nixos-background.gnomeFilePath}"
 
       [org.gnome.desktop.interface:Budgie]
-      gtk-theme="Qogir"
-      icon-theme="Qogir"
-      cursor-theme="Qogir"
-      font-name="Noto Sans 10"
-      document-font-name="Noto Sans 10"
-      monospace-font-name="Hack 10"
+      gtk-theme="Qogir-Dark"
+      icon-theme="Qogir-dark"
+      cursor-theme="Qogir-dark"
+      font-name="Inter 10"
+      document-font-name="Inter 10"
+      monospace-font-name="Fira Code 10"
       font-antialiasing="rgba"
       font-hinting="slight"
 
-      [com.solus-project.budgie-panel:Budgie]
-      dark-theme=false
+      [org.gnome.desktop.wm.preferences]
+      titlebar-font="Inter Bold 10"
 
       [com.solus-project.icon-tasklist:Budgie]
-      pinned-launchers=['nemo.desktop', 'firefox.desktop', 'xplayer.desktop']
+      pinned-launchers=["nemo.desktop", "firefox.desktop", "xplayer.desktop", "rhythmbox.desktop"]
+
+      [org.buddiesofbudgie.budgie-desktop-view:Budgie]
+      click-policy="double"
     ''
     + extraGSettingsOverrides;
 
   gsettingsOverridePackages =
     [
       budgie-desktop
+      budgie-desktop-view
       gsettings-desktop-schemas
     ]
     ++ extraGSettingsOverridePackages;
