@@ -4,7 +4,7 @@
   budgie-desktop,
   glib,
   gsettings-desktop-schemas,
-  nixos-artwork,
+  nixos-background ? null,
   extraGSettingsOverrides ? "",
   extraGSettingsOverridePackages ? [],
   ...
@@ -14,20 +14,26 @@
   gsettingsOverrides =
     ''
       [org.gnome.desktop.background:Budgie]
-      picture-uri="file://${nixos-artwork.wallpapers.simple-dark-gray.gnomeFilePath}"
+      picture-uri="file://${nixos-background.gnomeFilePath}"
 
       [org.gnome.desktop.screensaver:Budgie]
-      picture-uri="file://${nixos-artwork.wallpapers.simple-dark-gray.gnomeFilePath}"
+      picture-uri="file://${nixos-background.gnomeFilePath}"
 
       [org.gnome.desktop.interface:Budgie]
-      gtk-theme="Materia"
-      icon-theme="Papirus"
-      cursor-theme="Bibata-Modern-Classic"
+      gtk-theme="Qogir"
+      icon-theme="Qogir"
+      cursor-theme="Qogir"
       font-name="Noto Sans 10"
       document-font-name="Noto Sans 10"
       monospace-font-name="Hack 10"
       font-antialiasing="rgba"
       font-hinting="slight"
+
+      [com.solus-project.budgie-panel:Budgie]
+      dark-theme=false
+
+      [com.solus-project.icon-tasklist:Budgie]
+      pinned-launchers=['nemo.desktop', 'firefox.desktop', 'xplayer.desktop']
     ''
     + extraGSettingsOverrides;
 

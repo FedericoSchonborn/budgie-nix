@@ -9,10 +9,9 @@ with lib; let
   cfg = config.services.xserver.desktopManager.budgie;
 
   nixos-gsettings-overrides = pkgs.budgie.budgie-gsettings-overrides.override {
+    nixos-background = pkgs.nixos-artwork.wallpapers.nineish-dark-gray;
     inherit (cfg) extraGSettingsOverrides extraGSettingsOverridePackages;
   };
-
-  notExcluded = pkg: mkDefault (!(elem pkg config.environment.budgie.excludePackages));
 in {
   options = {
     services.xserver.desktopManager.budgie = {
@@ -55,9 +54,35 @@ in {
   };
 
   config = mkIf cfg.enable {
+    system.nixos-generate-config.desktopConfiguration = [
+      ''
+        # Enable the Budgie Desktop
+        services.xserver.displayManager.lightdm.greeters.slick.enable = true;
+        services.xserver.desktopManager.budgie.enable = true;
+      ''
+    ];
+
     services.xserver.displayManager.sessionPackages = with pkgs; [
       budgie.budgie-desktop
     ];
+
+    services.xserver.displayManager.lightdm.greeters.slick = {
+      enable = true;
+      theme = mkDefault {
+        name = "Qogir";
+        package = pkgs.qogir-theme;
+      };
+
+      iconTheme = mkDefault {
+        name = "Qogir";
+        package = pkgs.qogir-icon-theme;
+      };
+
+      cursorTheme = mkDefault {
+        name = "Qogir";
+        package = pkgs.qogir-icon-theme;
+      };
+    };
 
     environment.extraInit = ''
       ${concatMapStrings (p: ''
@@ -99,34 +124,27 @@ in {
         tzdata
       ]
       ++ (utils.removePackagesByName [
-          celluloid
-          gnome.eog
-          gnome.evince
+          cinnamon.nemo
+          cinnamon.xreader
+          cinnamon.xviewer
           gnome.file-roller
-          gnome.gedit
-          gnome.gnome-calculator
-          gnome.gnome-disk-utility
           gnome.gnome-screenshot
           gnome.gnome-system-monitor
           gnome.gnome-terminal
-          gnome.nautilus
-          gnome.sushi
-          materia-theme
-          papirus-icon-theme
-          bibata-cursors
+          xed-editor
+          xplayer
+          qogir-theme
+          qogir-icon-theme
           nixos-gsettings-overrides
         ]
         config.environment.budgie.excludePackages);
 
     # Default programs.
-    programs.evince.enable = notExcluded pkgs.gnome.evince;
     programs.file-roller.enable = notExcluded pkgs.gnome.file-roller;
-    programs.gnome-disks.enable = notExcluded pkgs.gnome.gnome-disk-utility;
-    services.gnome.sushi.enable = notExcluded pkgs.gnome.sushi;
 
     # Enable NM Applet (non-Indicator) if NetworkManager is enabled.
-    programs.nm-applet.enable = config.networking.networkmanager.enable;
-    programs.nm-applet.indicator = mkDefault false;
+    programs.nm-applet.enable = true;
+    programs.nm-applet.indicator = false;
 
     # Enable Budgie Desktop View by default.
     programs.budgie-desktop-view.enable = mkDefault true;
@@ -144,9 +162,15 @@ in {
     ];
 
     fonts.fontconfig.defaultFonts = {
-      emoji = ["Noto Emoji Color"];
-      monospace = ["Hack"];
-      sansSerif = ["Noto Sans"];
+      emoji = mkDefault ["Noto Emoji Color"];
+      monospace = mkDefault ["Hack"];
+      sansSerif = mkDefault ["Noto Sans"];
+    };
+
+    qt5 = {
+      enable = true;
+      style = mkDefault "gtk2";
+      platformTheme = mkDefault "gtk2";
     };
 
     services.xserver.updateDbusEnvironment = true;

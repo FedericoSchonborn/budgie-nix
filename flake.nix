@@ -4,11 +4,6 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
-    pre-commit-hooks = {
-      url = "github:cachix/pre-commit-hooks.nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     flake-compat = {
       url = "github:edolstra/flake-compat";
       flake = false;
@@ -18,7 +13,6 @@
   outputs = {
     self,
     nixpkgs,
-    pre-commit-hooks,
     ...
   }: let
     forAllSystems = nixpkgs.lib.genAttrs ["x86_64-linux" "aarch64-linux"];
@@ -35,16 +29,28 @@
 
     packages = forAllSystems (system: import ./packages {pkgs = nixpkgs.legacyPackages.${system};});
 
-    nixosConfigurations.budgie = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
+    nixosConfigurations = {
+      demo = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          self.nixosModules.budgie
+          {
+            nixpkgs.overlays = [self.overlays.budgie];
+          }
+          ./machines/demo
+        ];
+      };
 
-      modules = [
-        self.nixosModules.budgie
-        {
-          nixpkgs.overlays = [self.overlays.budgie];
-        }
-        ./machines/budgie
-      ];
+      install-iso = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          self.nixosModules.budgie
+          {
+            nixpkgs.overlays = [self.overlays.budgie];
+          }
+          ./machines/install-iso
+        ];
+      };
     };
 
     devShells = forAllSystems (system: let
@@ -54,21 +60,18 @@
         packages = with pkgs; [
           just
           jq
+          alejandra
+          nil
+          statix
         ];
 
         shellHook = ''
-          ${self.checks.${system}.pre-commit-hook.shellHook}
+          just --version
+          jq --version
+          alejandra --version
+          nil --version
+          statix --version
         '';
-      };
-    });
-
-    checks = forAllSystems (system: {
-      pre-commit-hook = pre-commit-hooks.lib.${system}.run {
-        src = ./.;
-        hooks = {
-          alejandra.enable = true;
-          statix.enable = true;
-        };
       };
     });
 
