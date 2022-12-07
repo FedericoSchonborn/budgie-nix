@@ -19,7 +19,13 @@
   };
 
   environment.systemPackages = with pkgs; [
+    # Web browser
     firefox
+
+    # Budgie-compatible themes
+    arc-theme
+    materia-theme
+    pocillo-gtk-theme
   ];
 
   users.users.demo = {

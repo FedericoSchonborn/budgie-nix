@@ -19,5 +19,10 @@
     inherit pkgs;
     inherit (desktopPackages) budgie-desktop;
   };
+
+  # Extra themes
+  themePackages = {
+    pocillo-gtk-theme = pkgs.callPackage ./pocillo-gtk-theme/default.nix {};
+  };
 in
-  desktopPackages // appletPackages // extrasPackages
+  desktopPackages // appletPackages // extrasPackages // themePackages

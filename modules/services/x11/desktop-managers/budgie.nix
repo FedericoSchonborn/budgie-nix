@@ -12,6 +12,8 @@ with lib; let
     nixos-background = pkgs.nixos-artwork.wallpapers.nineish-dark-gray;
     inherit (cfg) extraGSettingsOverrides extraGSettingsOverridePackages;
   };
+
+  notExcluded = pkg: mkDefault (!(elem pkg config.environment.budgie.excludePackages));
 in {
   options = {
     services.xserver.desktopManager.budgie = {

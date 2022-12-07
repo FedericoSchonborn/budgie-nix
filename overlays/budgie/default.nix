@@ -23,4 +23,7 @@
   budgieApplets.budgie-rotation-lock = packages.${prev.system}.budgie-rotation-lock;
   budgieApplets.budgie-trash = packages.${prev.system}.budgie-trash;
   budgieApplets.budgie-workspace-stopwatch = packages.${prev.system}.budgie-workspace-stopwatch;
+
+  # Pocillo theme
+  inherit (packages.${prev.system}) pocillo-gtk-theme;
 }

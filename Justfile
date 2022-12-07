@@ -1,5 +1,5 @@
 system := `nix eval nixpkgs#system`
-packages := "budgie-app-launcher budgie-applications-menu budgie-backgrounds budgie-brightness-controller budgie-control-center budgie-desktop budgie-desktop-view budgie-desktop-with-applets budgie-fuzzyclock budgie-kangaroo budgie-keyboard-autoswitch budgie-network-manager budgie-quicknote budgie-rotation-lock budgie-screensaver budgie-trash budgie-trash-applet budgie-workspace-stopwatch"
+packages := "budgie-app-launcher budgie-applications-menu budgie-backgrounds budgie-brightness-controller budgie-control-center budgie-desktop budgie-desktop-view budgie-desktop-with-applets budgie-fuzzyclock budgie-kangaroo budgie-keyboard-autoswitch budgie-network-manager budgie-quicknote budgie-rotation-lock budgie-screensaver budgie-trash budgie-trash-applet budgie-workspace-stopwatch pocillo-gtk-theme pocillo-icon-theme"
 
 @_default:
     just --list
