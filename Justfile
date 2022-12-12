@@ -17,11 +17,11 @@ packages := "budgie-app-launcher budgie-applications-menu budgie-backgrounds bud
 # Run the demo virtual machine.
 @demo-vm:
     nix build --print-build-logs ".#nixosConfigurations.demo.config.system.build.vm"
-    rm *.qcow2
+    rm -f *.qcow2
     ./result/bin/run-nixos-vm
 
 # Run the installer ISO virtual machine.
 @install-iso-vm:
     nix build --print-build-logs ".#nixosConfigurations.install-iso.config.system.build.vm"
-    rm *.qcow2
+    rm -f *.qcow2
     ./result/bin/run-nixos-vm
