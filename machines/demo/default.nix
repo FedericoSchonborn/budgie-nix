@@ -11,11 +11,6 @@
         budgie-trash-applet
       ];
     };
-
-    displayManager.autoLogin = {
-      enable = true;
-      user = "demo";
-    };
   };
 
   environment.systemPackages = with pkgs; [

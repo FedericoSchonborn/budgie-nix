@@ -24,27 +24,21 @@
       gtk-theme="Qogir-Dark"
       icon-theme="Qogir-dark"
       cursor-theme="Qogir-dark"
-      font-name="Inter 10"
-      document-font-name="Inter 10"
-      monospace-font-name="Fira Code 10"
-      font-antialiasing="rgba"
-      font-hinting="slight"
+      font-name="Noto Sans 10"
+      document-font-name="Noto Sans 10"
+      monospace-font-name="Hack 10"
 
       [org.gnome.desktop.wm.preferences]
-      titlebar-font="Inter Bold 10"
+      titlebar-font="Noto Sans Bold 10"
 
       [com.solus-project.icon-tasklist:Budgie]
-      pinned-launchers=["nemo.desktop", "firefox.desktop", "xplayer.desktop", "rhythmbox.desktop"]
-
-      [org.buddiesofbudgie.budgie-desktop-view:Budgie]
-      click-policy="double"
+      pinned-launchers=["caja.desktop", "firefox.desktop", "vlc.desktop"]
     ''
     + extraGSettingsOverrides;
 
   gsettingsOverridePackages =
     [
       budgie-desktop
-      budgie-desktop-view
       gsettings-desktop-schemas
     ]
     ++ extraGSettingsOverridePackages;

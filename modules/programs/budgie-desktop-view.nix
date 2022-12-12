@@ -17,8 +17,19 @@ in {
       budgie.budgie-desktop-view
     ];
 
-    services.xserver.desktopManager.budgie.sessionPath = with pkgs; [
-      budgie.budgie-desktop-view
-    ];
+    services.xserver.desktopManager.budgie = {
+      sessionPath = with pkgs; [
+        budgie.budgie-desktop-view
+      ];
+
+      extraGSettingsOverrides = ''
+        [org.buddiesofbudgie.budgie-desktop-view:Budgie]
+        click-policy="double"
+      '';
+
+      extraGSettingsOverridePackages = with pkgs; [
+        budgie.budgie-desktop-view
+      ];
+    };
   };
 }

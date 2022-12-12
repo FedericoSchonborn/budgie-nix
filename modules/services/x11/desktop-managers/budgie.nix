@@ -9,11 +9,9 @@ with lib; let
   cfg = config.services.xserver.desktopManager.budgie;
 
   nixos-gsettings-overrides = pkgs.budgie.budgie-gsettings-overrides.override {
-    nixos-background = pkgs.nixos-artwork.wallpapers.nineish-dark-gray;
+    nixos-background = pkgs.nixos-artwork.wallpapers.simple-dark-gray;
     inherit (cfg) extraGSettingsOverrides extraGSettingsOverridePackages;
   };
-
-  notExcluded = pkg: mkDefault (!(elem pkg config.environment.budgie.excludePackages));
 in {
   options = {
     services.xserver.desktopManager.budgie = {
@@ -71,17 +69,17 @@ in {
     services.xserver.displayManager.lightdm.greeters.slick = {
       enable = true;
       theme = mkDefault {
-        name = "Qogir";
+        name = "Qogir-Dark";
         package = pkgs.qogir-theme;
       };
 
       iconTheme = mkDefault {
-        name = "Qogir";
+        name = "Qogir-dark";
         package = pkgs.qogir-icon-theme;
       };
 
       cursorTheme = mkDefault {
-        name = "Qogir";
+        name = "Qogir-dark";
         package = pkgs.qogir-icon-theme;
       };
     };
@@ -126,29 +124,22 @@ in {
         tzdata
       ]
       ++ (utils.removePackagesByName [
-          cinnamon.nemo
-          cinnamon.pix
-          cinnamon.xreader
-          cinnamon.xviewer
-          galculator
-          gnome.file-roller
-          gnome.gnome-disk-utility
-          gnome.gnome-screenshot
-          gnome.gnome-system-monitor
-          gnome.gnome-terminal
-          rhythmbox
-          xed-editor
-          xplayer
+          mate.caja # Needs to be patched, see: https://github.com/mate-desktop/caja/pull/1688
+          mate.eom
+          mate.pluma
+          mate.atril
+          mate.engrampa
+          mate.mate-calc
+          mate.mate-utils
+          mate.mate-terminal
+          mate.mate-power-manager
+          mate.mate-system-monitor
+          vlc
           qogir-theme
           qogir-icon-theme
           nixos-gsettings-overrides
         ]
         config.environment.budgie.excludePackages);
-
-    # Default programs.
-    programs.file-roller.enable = notExcluded pkgs.gnome.file-roller;
-    programs.gnome-disks.enable = notExcluded pkgs.gnome.gnome-disk-utility;
-    programs.gnome-terminal.enable = notExcluded pkgs.gnome.gnome-terminal;
 
     # Enable NM Applet (non-Indicator) if NetworkManager is enabled.
     programs.nm-applet.enable = true;
@@ -165,13 +156,13 @@ in {
     environment.sessionVariables.NIX_GSETTINGS_OVERRIDES_DIR = "${nixos-gsettings-overrides}/share/gsettings-schemas/nixos-gsettings-overrides/glib-2.0/schemas";
 
     fonts.fonts = with pkgs; [
-      inter
-      fira-code
+      noto-fonts
+      hack-font
     ];
 
     fonts.fontconfig.defaultFonts = {
-      sansSerif = mkDefault ["Inter"];
-      monospace = mkDefault ["Fira Code"];
+      sansSerif = mkDefault ["Noto Sans"];
+      monospace = mkDefault ["Hack"];
     };
 
     qt5 = {
