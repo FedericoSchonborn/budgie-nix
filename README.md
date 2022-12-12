@@ -17,5 +17,5 @@ $ just build-all
 ```shell
 $ nix develop
 # Inside the `nix develop` shell:
-$ just run-vm # or run-clean-vm if you want a clean machine.
+$ just demo-vm
 ```
