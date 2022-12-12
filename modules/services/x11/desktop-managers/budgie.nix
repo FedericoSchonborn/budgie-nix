@@ -15,7 +15,7 @@ with lib; let
 in {
   options = {
     services.xserver.desktopManager.budgie = {
-      enable = mkEnableOption "Budgie Desktop";
+      enable = mkEnableOption "Budgie desktop";
 
       sessionPath = mkOption {
         # TODO: Description.
@@ -24,12 +24,11 @@ in {
         example = literalExpression "[ pkgs.budgie.budgie-desktop-view ]";
       };
 
-      appletPackages = mkOption {
-        # TODO: Better description.
-        description = "Budgie Desktop Applets";
+      pluginPackages = mkOption {
+        description = "Plugins to be installed with the Budgie desktop";
         type = with types; listOf package;
         default = [];
-        example = literalExpression "[ pkgs.budgieApplets.budgie-trash-applet ]";
+        example = literalExpression "[ pkgs.budgiePlugins.budgie-trash-applet ]";
       };
 
       extraGSettingsOverrides = mkOption {
@@ -102,8 +101,8 @@ in {
       [
         # Budgie Desktop.
         budgie.budgie-backgrounds
-        (budgie.budgie-desktop-with-applets.override {
-          applets = cfg.appletPackages;
+        (budgie.budgie-desktop-with-plugins.override {
+          plugins = cfg.pluginPackages;
         })
         budgie.budgie-control-center
         budgie.budgie-screensaver
@@ -148,7 +147,7 @@ in {
     # Enable Budgie Desktop View by default.
     programs.budgie-desktop-view.enable = mkDefault true;
 
-    # Required by backgrounds and applets.
+    # Required by backgrounds and plugins.
     environment.pathsToLink = [
       "/share"
     ];

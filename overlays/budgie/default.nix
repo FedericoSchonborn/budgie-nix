@@ -6,14 +6,14 @@
       budgie-backgrounds
       budgie-control-center
       budgie-desktop
-      budgie-desktop-with-applets
+      budgie-desktop-with-plugins
       budgie-desktop-view
       budgie-screensaver
       budgie-gsettings-overrides
       ;
   };
 
-  budgieApplets = {
+  budgiePlugins = {
     # Third-party applets
     inherit
       (packages.${prev.system})

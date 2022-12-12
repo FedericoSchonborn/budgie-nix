@@ -7,7 +7,7 @@
 
     desktopManager.budgie = {
       enable = true;
-      appletPackages = with pkgs.budgieApplets; [
+      pluginPackages = with pkgs.budgiePlugins; [
         budgie-trash-applet
       ];
     };

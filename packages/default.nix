@@ -4,13 +4,13 @@
     budgie-control-center = pkgs.callPackage ./budgie-control-center/default.nix {};
     budgie-desktop = pkgs.callPackage ./budgie-desktop {inherit budgie-screensaver;};
     budgie-desktop-view = pkgs.callPackage ./budgie-desktop-view/default.nix {};
-    budgie-desktop-with-applets = pkgs.callPackage ./budgie-desktop/wrapper.nix {inherit budgie-desktop;};
+    budgie-desktop-with-plugins = pkgs.callPackage ./budgie-desktop/wrapper.nix {inherit budgie-desktop;};
     budgie-screensaver = pkgs.callPackage ./budgie-screensaver {};
     budgie-gsettings-overrides = pkgs.callPackage ./budgie-gsettings-overrides {inherit budgie-desktop budgie-desktop-view;};
   };
 
-  # Third-party applets
-  appletPackages = {
+  # Third-party plugins
+  pluginPackages = {
     budgie-trash-applet = pkgs.callPackage ./budgie-trash-applet/default.nix {inherit (corePackages) budgie-desktop;};
   };
 
@@ -25,4 +25,4 @@
     pocillo-gtk-theme = pkgs.callPackage ./pocillo-gtk-theme/default.nix {};
   };
 in
-  corePackages // appletPackages // extrasPackages // themePackages
+  corePackages // pluginPackages // extrasPackages // themePackages

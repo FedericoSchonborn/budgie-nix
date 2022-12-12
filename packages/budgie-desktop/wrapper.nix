@@ -5,10 +5,10 @@
   xorg,
   wrapGAppsHook,
   budgie-desktop,
-  applets ? [],
+  plugins ? [],
 }:
 stdenv.mkDerivation {
-  pname = "${budgie-desktop.pname}-with-applets";
+  pname = "${budgie-desktop.pname}-with-plugins";
   inherit (budgie-desktop) version;
 
   src = null;
@@ -17,7 +17,7 @@ stdenv.mkDerivation {
     [
       budgie-desktop
     ]
-    ++ applets;
+    ++ plugins;
 
   passAsFile = ["paths"];
 
@@ -26,7 +26,7 @@ stdenv.mkDerivation {
     wrapGAppsHook
   ];
 
-  buildInputs = lib.forEach applets (applet: applet.buildInputs) ++ applets;
+  buildInputs = lib.forEach plugins (plugin: plugin.buildInputs) ++ plugins;
 
   dontUnpack = true;
   dontConfigure = true;
