@@ -21,9 +21,9 @@
       picture-uri="file://${nixos-background.gnomeFilePath}"
 
       [org.gnome.desktop.interface:Budgie]
-      gtk-theme="Qogir-Dark"
-      icon-theme="Qogir-dark"
-      cursor-theme="Qogir-dark"
+      gtk-theme="Materia"
+      icon-theme="Papirus"
+      cursor-theme="Bibata-Modern-Ice"
       font-name="Noto Sans 10"
       document-font-name="Noto Sans 10"
       monospace-font-name="Hack 10"

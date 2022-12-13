@@ -135,11 +135,15 @@ in {
           mate.mate-power-manager # [*]
           mate.mate-system-monitor # [*]
           vlc
-          qogir-theme
-          qogir-icon-theme
+          materia-theme
+          papirus-icon-theme
+          bibata-cursors
           nixos-gsettings-overrides
         ]
         config.environment.budgie.excludePackages);
+
+    # Enable GNOME Keyring
+    services.gnome.gnome-keyring.enable = true;
 
     # Enable NM Applet (non-Indicator) if NetworkManager is enabled.
     programs.nm-applet.enable = true;
