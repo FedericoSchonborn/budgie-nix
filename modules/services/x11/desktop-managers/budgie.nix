@@ -122,17 +122,18 @@ in {
         # Required by Budgie Control Center.
         tzdata
       ]
+      # Packages marked with [*] need to be patched to show up on Budgie.
       ++ (utils.removePackagesByName [
-          mate.caja # Needs to be patched, see: https://github.com/mate-desktop/caja/pull/1688
+          mate.caja # [*]
           mate.eom
           mate.pluma
           mate.atril
           mate.engrampa
           mate.mate-calc
-          mate.mate-utils
+          mate.mate-utils # [*]
           mate.mate-terminal
-          mate.mate-power-manager
-          mate.mate-system-monitor
+          mate.mate-power-manager # [*]
+          mate.mate-system-monitor # [*]
           vlc
           qogir-theme
           qogir-icon-theme
