@@ -21,15 +21,22 @@
       picture-uri="file://${nixos-background.gnomeFilePath}"
 
       [org.gnome.desktop.interface:Budgie]
-      gtk-theme="Materia"
+      gtk-theme="Materia-dark"
       icon-theme="Papirus"
       cursor-theme="Bibata-Modern-Ice"
       font-name="Noto Sans 10"
       document-font-name="Noto Sans 10"
       monospace-font-name="Hack 10"
+      enable-hot-corners=true
 
       [org.gnome.desktop.wm.preferences]
       titlebar-font="Noto Sans Bold 10"
+
+      [org.gnome.mutter]
+      workspaces-only-on-primary=true
+
+      [com.solus-project.budgie-panel:Budgie]
+      builtin-theme=false
 
       [com.solus-project.icon-tasklist:Budgie]
       pinned-launchers=["caja.desktop", "firefox.desktop", "vlc.desktop"]

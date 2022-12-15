@@ -68,18 +68,18 @@ in {
     services.xserver.displayManager.lightdm.greeters.slick = {
       enable = true;
       theme = mkDefault {
-        name = "Qogir-Dark";
-        package = pkgs.qogir-theme;
+        name = "Materia-dark";
+        package = pkgs.materia-theme;
       };
 
       iconTheme = mkDefault {
-        name = "Qogir-dark";
-        package = pkgs.qogir-icon-theme;
+        name = "Papirus";
+        package = pkgs.papirus-icon-theme;
       };
 
       cursorTheme = mkDefault {
-        name = "Qogir-dark";
-        package = pkgs.qogir-icon-theme;
+        name = "Bibata-Modern-Ice";
+        package = pkgs.bibata-cursors;
       };
     };
 
@@ -118,9 +118,6 @@ in {
 
         # Required by Budgie Menu.
         gnome-menus
-
-        # Required by Budgie Control Center.
-        tzdata
       ]
       # Packages marked with [*] need to be patched to show up on Budgie.
       ++ (utils.removePackagesByName [
@@ -142,9 +139,6 @@ in {
         ]
         config.environment.budgie.excludePackages);
 
-    # Enable GNOME Keyring
-    services.gnome.gnome-keyring.enable = true;
-
     # Enable NM Applet (non-Indicator) if NetworkManager is enabled.
     programs.nm-applet.enable = true;
     programs.nm-applet.indicator = false;
@@ -154,7 +148,7 @@ in {
 
     # Required by backgrounds and plugins.
     environment.pathsToLink = [
-      "/share"
+      "/share" # TODO: https://github.com/NixOS/nixpkgs/issues/47173
     ];
 
     environment.sessionVariables.NIX_GSETTINGS_OVERRIDES_DIR = "${nixos-gsettings-overrides}/share/gsettings-schemas/nixos-gsettings-overrides/glib-2.0/schemas";
@@ -170,27 +164,38 @@ in {
     };
 
     qt5 = {
-      enable = true;
+      enable = mkDefault true;
       style = mkDefault "gtk2";
       platformTheme = mkDefault "gtk2";
     };
 
     services.xserver.updateDbusEnvironment = true;
 
+    # Reference: services.gnome.core-os-utilites
     # Required by the Budgie Desktop session.
     programs.dconf.enable = true;
-
+    # Required by Budgie Polkit Dialog.
+    security.polkit.enable = true;
+    services.accounts-daemon.enable = true;
+    services.gnome.gnome-keyring.enable = true;
     # Required by Budgie Control Center.
     hardware.bluetooth.enable = mkDefault true;
     networking.networkmanager.enable = mkDefault true;
     services.colord.enable = mkDefault true;
+
+    # VTE integration for MATE Terminal.
+    programs.bash.vteIntegration = true;
+    programs.zsh.vteIntegration = true;
+
     services.dbus.enable = true;
     services.dbus.packages = with pkgs; [
       budgie.budgie-control-center
     ];
 
-    # Required by Budgie Polkit Dialog.
-    security.polkit.enable = true;
+    xdg.portal.enable = true;
+    xdg.portal.extraPortals = with pkgs; [
+      xdg-desktop-portal-gtk
+    ];
 
     # Required by Budgie Screensaver.
     security.pam.services.budgie-screensaver = {};

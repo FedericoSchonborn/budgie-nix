@@ -1,23 +1,27 @@
 {
   lib,
   stdenv,
+  substituteAll,
   fetchFromGitHub,
   accountsservice,
-  clutter,
   clutter-gtk,
-  colord,
+  clutter,
   colord-gtk,
+  colord,
+  cups,
   gcr,
   gettext,
   glib,
-  gnome,
+  glibc,
   gnome-desktop,
   gnome-online-accounts,
+  gnome,
   gsound,
   gtk3,
   ibus,
   krb5,
   libepoxy,
+  libgnomekbd,
   libgtop,
   libgudev,
   libhandy,
@@ -30,10 +34,12 @@
   meson,
   modemmanager,
   networkmanager,
+  networkmanagerapplet,
   ninja,
   pkg-config,
   polkit,
   samba,
+  tzdata,
   udisks,
   upower,
   wrapGAppsHook,
@@ -49,6 +55,15 @@ stdenv.mkDerivation rec {
     fetchSubmodules = true;
     sha256 = "d9HdtMoDZHl8rENYO3jXSlzTewgna95qBDMobk2fEcg=";
   };
+
+  patches = [
+    (substituteAll {
+      src = ./paths.patch;
+      gcm = gnome.gnome-color-manager;
+      inherit glibc libgnomekbd tzdata;
+      inherit cups networkmanagerapplet;
+    })
+  ];
 
   nativeBuildInputs = [
     gettext
