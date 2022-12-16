@@ -15,19 +15,24 @@
     nixpkgs,
     ...
   }: let
-    forAllSystems = nixpkgs.lib.genAttrs ["x86_64-linux" "aarch64-linux"];
+    forAllSystems = f:
+      nixpkgs.lib.genAttrs ["x86_64-linux" "aarch64-linux"] (system:
+        f {
+          inherit system;
+          pkgs = nixpkgs.legacyPackages.${system};
+        });
   in {
+    packages = forAllSystems ({pkgs, ...}: import ./packages {inherit pkgs;});
+
+    overlays = {
+      budgie = import ./overlay {inherit (self) packages;};
+      default = self.overlays.budgie;
+    };
+
     nixosModules = {
       budgie = import ./modules {inherit (self) overlays;};
       default = self.nixosModules.budgie;
     };
-
-    overlays = {
-      budgie = import ./overlays/budgie {inherit (self) packages;};
-      default = self.overlays.budgie;
-    };
-
-    packages = forAllSystems (system: import ./packages {pkgs = nixpkgs.legacyPackages.${system};});
 
     nixosConfigurations = {
       demo = nixpkgs.lib.nixosSystem {
@@ -53,29 +58,21 @@
       };
     };
 
-    devShells = forAllSystems (system: let
-      pkgs = nixpkgs.legacyPackages.${system};
-    in {
+    devShells = forAllSystems ({pkgs, ...}: {
       default = pkgs.mkShell {
         packages = with pkgs; [
           just
           jq
-          alejandra
-          nil
-          statix
         ];
 
         shellHook = ''
           just --version
           jq --version
-          alejandra --version
-          nil --version
-          statix --version
         '';
       };
     });
 
-    formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
+    formatter = forAllSystems ({pkgs, ...}: pkgs.alejandra);
   };
 
   nixConfig = {
