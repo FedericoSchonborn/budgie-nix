@@ -37,7 +37,7 @@
       ;
   };
 
-  # Pocillo theme
+  # Pocillo themes
   inherit
     (packages.${prev.system})
     pocillo-gtk-theme

@@ -68,18 +68,18 @@ in {
     services.xserver.displayManager.lightdm.greeters.slick = {
       enable = true;
       theme = mkDefault {
-        name = "Materia-dark";
-        package = pkgs.materia-theme;
+        name = "Qogir-Dark";
+        package = pkgs.qogir-theme;
       };
 
       iconTheme = mkDefault {
-        name = "Papirus";
-        package = pkgs.papirus-icon-theme;
+        name = "Qogir-dark";
+        package = pkgs.qogir-icon-theme;
       };
 
       cursorTheme = mkDefault {
-        name = "Bibata-Modern-Ice";
-        package = pkgs.bibata-cursors;
+        name = "Qogir-dark";
+        package = pkgs.qogir-icon-theme;
       };
     };
 
@@ -132,9 +132,8 @@ in {
           mate.mate-power-manager # [*]
           mate.mate-system-monitor # [*]
           vlc
-          materia-theme
-          papirus-icon-theme
-          bibata-cursors
+          qogir-theme
+          qogir-icon-theme
           nixos-gsettings-overrides
         ]
         config.environment.budgie.excludePackages);

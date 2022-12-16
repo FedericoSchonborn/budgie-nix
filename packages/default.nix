@@ -20,9 +20,9 @@
     inherit (corePackages) budgie-desktop;
   };
 
-  # Extra themes
-  themePackages = {
+  # Pocillo themes
+  pocilloPackages = {
     pocillo-gtk-theme = pkgs.callPackage ./pocillo-gtk-theme/default.nix {};
   };
 in
-  corePackages // pluginPackages // extrasPackages // themePackages
+  corePackages // pluginPackages // extrasPackages // pocilloPackages
