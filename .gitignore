@@ -1,4 +1,6 @@
+# Direnv
 .direnv
-.pre-commit-config.yaml
-*.qcow2
+
+# Nix
 result*
+*.qcow2
