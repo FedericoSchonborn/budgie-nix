@@ -3,25 +3,27 @@ packages := "budgie-app-launcher budgie-applications-menu budgie-backgrounds bud
 
 @_default:
     just --list
+    echo "System: {{ system }}"
 
 # Build all packages.
 @build-all:
     just build {{ packages }}
 
 # Build one or more packages.
-@build +PACKAGES:
+build +PACKAGES:
     for package in {{ PACKAGES }}; do \
         nix build --print-build-logs ".#${package}"; \
     done
 
 # Run the demo virtual machine.
 @demo-vm:
-    nix build --print-build-logs ".#nixosConfigurations.demo.config.system.build.vm"
-    rm -f *.qcow2
-    ./result/bin/run-nixos-vm
+    just _vm demo
 
 # Run the installer ISO virtual machine.
 @install-iso-vm:
-    nix build --print-build-logs ".#nixosConfigurations.install-iso.config.system.build.vm"
+    just _vm install-iso
+
+_vm NAME:
+    nix build --print-build-logs ".#nixosConfigurations.{{ NAME }}.config.system.build.vm"
     rm -f *.qcow2
     ./result/bin/run-nixos-vm
