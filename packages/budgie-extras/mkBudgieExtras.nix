@@ -41,7 +41,7 @@ pkgs.callPackage
         repo = "budgie-extras";
         rev = "v${version}";
         fetchSubmodules = true;
-        sha256 = "FBtWZxHgwTHd38aekB+X4Qx+WlTENnOOzDztn/DPtwQ=";
+        sha256 = "sha256-FBtWZxHgwTHd38aekB+X4Qx+WlTENnOOzDztn/DPtwQ=";
       };
 
       nativeBuildInputs = [

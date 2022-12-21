@@ -18,6 +18,7 @@
     inherit
       (packages.${prev.system})
       budgie-trash-applet
+      budgie-screenshot-applet
       ;
 
     # Budgie Extras

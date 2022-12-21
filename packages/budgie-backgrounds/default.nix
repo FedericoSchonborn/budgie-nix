@@ -15,7 +15,7 @@ stdenv.mkDerivation rec {
     owner = "BuddiesOfBudgie";
     repo = "${pname}";
     rev = "v${version}";
-    sha256 = "pDFd+WvWOPgDoSffmX9mzjDQbhePsJV1wGqmPDcnOlw=";
+    sha256 = "sha256-pDFd+WvWOPgDoSffmX9mzjDQbhePsJV1wGqmPDcnOlw=";
   };
 
   nativeBuildInputs = [

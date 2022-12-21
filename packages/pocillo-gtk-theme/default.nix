@@ -14,7 +14,7 @@ stdenv.mkDerivation rec {
     owner = "UbuntuBudgie";
     repo = pname;
     rev = "v${version}";
-    sha256 = "cYJmx3TtEe2L+qz6IVDQjfGhaJlE89J7O9aMjzLdSXs=";
+    sha256 = "sha256-cYJmx3TtEe2L+qz6IVDQjfGhaJlE89J7O9aMjzLdSXs=";
   };
 
   patches = [

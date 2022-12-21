@@ -25,7 +25,7 @@
     packages = forAllSystems ({pkgs, ...}: import ./packages {inherit pkgs;});
 
     overlays = {
-      budgie = import ./overlay {inherit (self) packages;};
+      budgie = import ./overlay.nix {inherit (self) packages;};
       default = self.overlays.budgie;
     };
 

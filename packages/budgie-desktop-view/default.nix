@@ -21,14 +21,14 @@ stdenv.mkDerivation rec {
     owner = "BuddiesOfBudgie";
     repo = "${pname}";
     rev = "v${version}";
-    sha256 = "g7UziBmeqKlNzEBgySPgr+3h17Us67xmOAzOhIHwJl0=";
+    sha256 = "sha256-g7UziBmeqKlNzEBgySPgr+3h17Us67xmOAzOhIHwJl0=";
   };
 
   patches = [
     (fetchpatch {
       # Remove unused gtk-update-icon-cache
       url = "https://github.com/BuddiesOfBudgie/${pname}/commit/b76a518b97beb65d1096344f6ba9e9a3f647d9a1.patch";
-      sha256 = "Cgk8Q8QNkauVs80kP6vZuXbtdXBXk1px+83eBlkpwl8=";
+      sha256 = "sha256-Cgk8Q8QNkauVs80kP6vZuXbtdXBXk1px+83eBlkpwl8=";
     })
   ];
 

@@ -12,6 +12,7 @@
   # Third-party plugins
   pluginPackages = {
     budgie-trash-applet = pkgs.callPackage ./budgie-trash-applet/default.nix {inherit (corePackages) budgie-desktop;};
+    budgie-screenshot-applet = pkgs.callPackage ./budgie-screenshot-applet/default.nix {inherit (corePackages) budgie-desktop;};
   };
 
   # Budgie Extras
