@@ -1,4 +1,12 @@
-{pkgs, ...}: {
+{
+  modulesPath,
+  pkgs,
+  ...
+}: {
+  imports = [
+    "${modulesPath}/virtualisation/qemu-vm.nix"
+  ];
+
   services.xserver = {
     enable = true;
     excludePackages = with pkgs; [
