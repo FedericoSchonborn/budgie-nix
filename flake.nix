@@ -15,14 +15,9 @@
     nixpkgs,
     ...
   }: let
-    forAllSystems = f:
-      nixpkgs.lib.genAttrs ["x86_64-linux" "aarch64-linux"] (system:
-        f {
-          inherit system;
-          pkgs = nixpkgs.legacyPackages.${system};
-        });
+    forAllSystems = f: nixpkgs.lib.genAttrs ["x86_64-linux" "aarch64-linux"] (system: f nixpkgs.legacyPackages.${system});
   in {
-    packages = forAllSystems ({pkgs, ...}: import ./packages {inherit pkgs;});
+    packages = forAllSystems (pkgs: import ./packages {inherit pkgs;});
 
     overlays = {
       budgie = import ./overlay.nix {inherit (self) packages;};
@@ -58,7 +53,7 @@
       };
     };
 
-    devShells = forAllSystems ({pkgs, ...}: {
+    devShells = forAllSystems (pkgs: {
       default = pkgs.mkShell {
         packages = with pkgs; [
           just
@@ -72,7 +67,7 @@
       };
     });
 
-    formatter = forAllSystems ({pkgs, ...}: pkgs.alejandra);
+    formatter = forAllSystems (pkgs: pkgs.alejandra);
   };
 
   nixConfig = {
